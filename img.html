@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scale=no, traget-densitydpi=high-dpi"/>
+	<title>图片旋转</title>
+	<link rel="stylesheet" type="text/css" href="css/common.css" >
+	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="js/jQueryRotate-2.3.js"></script>
+</head>
+
+<body>
+<style>
+#idContainer{width:600px;}
+.btns{width:600px;}
+img {
+	display: inline-block; 
+	max-width:600px;
+	/*filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);*/
+}
+.tools{display:none;position:relative;z-index:100;text-align: center;}
+</style>
+<div id="idContainer" ><img class="img" src="images/123.jpg"></div>
+<p>附近的看了方尽快的拉升房价看来大家分开来的时间按附件的卡拉</p>
+<div class="btns">
+	<input id="idVertical" type="button" value="垂直翻转" />
+	<input id="idHorizontal" type="button" value="水平翻转" />
+	<input id="idBig" type="button" value=" 放大 " />
+	<input id="idSmall" type="button" value=" 缩小 " />
+</div>
+<script>
+function setPos(){
+	var img=$('.img');
+	$(".tools").css({
+		top: -30 + "px",
+		left: function(){
+			return (img[0].clientWidth - $(this).width)/2 + "px";
+		}
+	});
+}
+$(document).ready(function(){
+	var wp=$('#idContainer');		
+	var img=$('.img');
+	var html="";
+		html='<div class="tools"><input id="idLeft" type="button" value="向左旋转" />&nbsp;<input id="idRight" type="button" value="向右旋转" />&nbsp;<input id="reset" type="button" value="重置" /></div>';
+
+	img.after(html);
+	wp.bind({
+		mouseover: function(){
+			$(".tools").css("display","block");
+			/*$(".tools").mouseover(function(){
+				$(this).css("display","block");
+			});*/
+			setPos();
+		},
+		mouseout: function(){
+			$(".tools").css("display","none");
+		}
+	});	
+
+	if(!$.support.leadingWhitespace){ //ie8及以下
+		var num = 0; 
+		$('#idRight').bind("click", function(){ 
+			num = (num + 1) % 4; 
+			img[0].style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+num+')';
+		});
+		$('#idLeft').bind("click", function(){ 
+			num = (num - 1) % 4; 
+			img[0].style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+num+')'; 
+		});
+		$('#reset').bind("click", function(){ 
+			num = 0; 
+			img[0].style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+num+')'; 
+		});
+	}else{
+		var angle=0, scale_num=0;
+		$('#idRight').bind("click", function(){
+			angle += 90;
+			img.rotate({animateTo:angle});
+		});
+		$('#idLeft').bind("click", function(){
+			angle -= 90;
+			img.rotate({animateTo:angle});
+		});
+		$('#reset').bind("click", function(){
+			angle = 0;
+			img.rotate({animateTo:angle});
+		});	
+	}
+	
+	
+	/*$('#idBig').click(function(){	
+		scale_num++;
+		var tp=2*scale_num;	
+		$('.img').css("-webkit-transform", "scale(2)");
+	});
+	$('#idSmall').click(function(){
+		$('.img').css("-webkit-transform", "scale(0.5)");
+	});*/
+});
+</script>
+</body> 
+</html>
