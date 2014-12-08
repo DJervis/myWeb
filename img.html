@@ -11,47 +11,103 @@
 
 <body>
 <style>
-#idContainer{width:600px;}
+#idContainer{width:900px; height:600px; border:1px solid #555;}
 .btns{width:600px;}
 img {
 	display: inline-block; 
 	max-width:600px;
 	/*filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);*/
 }
-.tools{display:none;position:relative;z-index:100;text-align: center;}
+.tools{display:none;bottom: 5px; right: 10px; z-index:100;}
+.mask {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #555;
+	opacity: 0.5;
+	z-index:999;
+	filter:Alpha(opacity=50); 
+}
+.lightBox{
+	display: none;
+	position: fixed;
+	z-index: 1000;
+	/*border:5px solid #fff;*/	
+}
+.lightBox .con{
+	position: fixed;
+}
+.lightBox img{
+	box-shadow: 0 0 25px #444;
+}
+
+.btn{
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+}
 </style>
-<div id="idContainer" ><img class="img" src="images/123.jpg"></div>
-<p>附近的看了方尽快的拉升房价看来大家分开来的时间按附件的卡拉</p>
+<div id="idContainer" class="pr" ><img class="img" src="images/123.jpg" onclick="imgShow();"></div>
 <div class="btns">
 	<input id="idVertical" type="button" value="垂直翻转" />
 	<input id="idHorizontal" type="button" value="水平翻转" />
 	<input id="idBig" type="button" value=" 放大 " />
 	<input id="idSmall" type="button" value=" 缩小 " />
 </div>
+<div class="mask"></div>
+<div class="lightBox">
+	<div class="con"><img class="img" src="images/123.jpg"></div>
+	<div class="btn">
+		<a id="rtBtn" href="javascript:;">旋转</a>
+		<a id="resetBtn" href="javascript:;">重置</a>
+	</div>
+	<a class="close" href="javascript:;" onclick="close();" style="position:fixed;top:20px; right:20px;" >关闭</a>
+</div>
+
 <script>
-function setPos(){
-	var img=$('.img');
-	$(".tools").css({
-		top: -30 + "px",
+function setPos(dom){
+	//var img=$('.con');
+	var wp=$(".mask");
+	dom.css({
+		top: function(){
+			return (wp[0].clientHeight - $(this)[0].clientHeight)/2 + "px";
+		},
 		left: function(){
-			return (img[0].clientWidth - $(this).width)/2 + "px";
+			return (wp[0].clientWidth - $(this)[0].clientWidth)/2 + "px";
 		}
 	});
+	//alert(img.css("top"));
+}
+function imgShow(){
+	$('.mask').show();
+	$('.lightBox').show();
+	var wp=$('.mask');	
+	var img=$('.con');
+	$(window).load(function(){
+		setPos(img);
+	});
+}
+function close(){
+	$('.mask').hide();
+	$('.lightBox').hide();
 }
 $(document).ready(function(){
-	var wp=$('#idContainer');		
-	var img=$('.img');
+	var wp=$('.mask');	
+	var img=$('.con');
+	
 	var html="";
-		html='<div class="tools"><input id="idLeft" type="button" value="向左旋转" />&nbsp;<input id="idRight" type="button" value="向右旋转" />&nbsp;<input id="reset" type="button" value="重置" /></div>';
+		html='<div class="tools pa"><input id="idLeft" type="button" value="向左旋转" />&nbsp;<input id="idRight" type="button" value="向右旋转" />&nbsp;<input id="reset" type="button" value="重置" /></div>';
 
-	img.after(html);
+	//img.after(html);
 	wp.bind({
 		mouseover: function(){
 			$(".tools").css("display","block");
 			/*$(".tools").mouseover(function(){
 				$(this).css("display","block");
 			});*/
-			setPos();
 		},
 		mouseout: function(){
 			$(".tools").css("display","none");
@@ -59,22 +115,35 @@ $(document).ready(function(){
 	});	
 
 	if(!$.support.leadingWhitespace){ //ie8及以下
-		var num = 0; 
-		$('#idRight').bind("click", function(){ 
+		var num = 0;		
+		function keepMid(img){ //保持居中
+			img.css({
+				top: function(){
+					return ( wp[0].clientHeight - $(this)[0].offsetHeight ) / 2 + "px";
+				},
+				left: function(){
+					return ( wp[0].clientWidth - $(this)[0].offsetWidth ) / 2 + "px";
+				}
+			});
+		}
+		$('#rtBtn').bind("click", function(){ 
 			num = (num + 1) % 4; 
-			img[0].style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+num+')';
+			img[0].style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+num+')';	
+			keepMid(img);
 		});
 		$('#idLeft').bind("click", function(){ 
 			num = (num - 1) % 4; 
 			img[0].style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+num+')'; 
+			keepMid(img);
 		});
-		$('#reset').bind("click", function(){ 
+		$('#resetBtn').bind("click", function(){ 
 			num = 0; 
 			img[0].style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+num+')'; 
+			keepMid(img);
 		});
 	}else{
 		var angle=0, scale_num=0;
-		$('#idRight').bind("click", function(){
+		$('#rtBtn').bind("click", function(){
 			angle += 90;
 			img.rotate({animateTo:angle});
 		});
@@ -82,7 +151,7 @@ $(document).ready(function(){
 			angle -= 90;
 			img.rotate({animateTo:angle});
 		});
-		$('#reset').bind("click", function(){
+		$('#resetBtn').bind("click", function(){
 			angle = 0;
 			img.rotate({animateTo:angle});
 		});	
