@@ -13,9 +13,10 @@
 <style>
 #idContainer{width:900px; height:600px; border:1px solid #555;}
 .btns{width:600px;}
-img {
+.img{
 	display: inline-block; 
 	max-width:600px;
+	cursor: pointer;
 	/*filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);*/
 }
 .tools{display:none;bottom: 5px; right: 10px; z-index:100;}
@@ -27,20 +28,24 @@ img {
 	width: 100%;
 	height: 100%;
 	background: #555;
-	opacity: 0.5;
+	text-align: center;
 	z-index:999;
+	opacity: 0.5;
 	filter:Alpha(opacity=50); 
 }
 .lightBox{
 	display: none;
 	position: fixed;
 	z-index: 1000;
-	/*border:5px solid #fff;*/	
+	/*border:5px solid #fff;*/
 }
 .lightBox .con{
 	position: fixed;
+	display: inline-block;
 }
 .lightBox img{
+	padding: 0;
+	margin:0;
 	box-shadow: 0 0 25px #444;
 }
 
@@ -48,6 +53,14 @@ img {
 	position: fixed;
 	bottom: 20px;
 	right: 20px;
+}
+a.close{
+	width: 34px;
+	height: 34px;
+	background: url(images/close.png) no-repeat;	
+}
+a.close:hover{
+	background-position: 0 -41px;
 }
 </style>
 <div id="idContainer" class="pr" ><img class="img" src="images/123.jpg" onclick="imgShow();"></div>
@@ -57,65 +70,51 @@ img {
 	<input id="idBig" type="button" value=" 放大 " />
 	<input id="idSmall" type="button" value=" 缩小 " />
 </div>
-<div class="mask"></div>
-<div class="lightBox">
-	<div class="con"><img class="img" src="images/123.jpg"></div>
-	<div class="btn">
-		<a id="rtBtn" href="javascript:;">旋转</a>
-		<a id="resetBtn" href="javascript:;">重置</a>
-	</div>
-	<a class="close" href="javascript:;" onclick="close();" style="position:fixed;top:20px; right:20px;" >关闭</a>
-</div>
+<div class="lightBox_wp"></div>
 
 <script>
-function setPos(dom){
-	//var img=$('.con');
+function setPos(dom){ //设置居中显示
 	var wp=$(".mask");
 	dom.css({
 		top: function(){
-			return (wp[0].clientHeight - $(this)[0].clientHeight)/2 + "px";
+			return (wp[0].clientHeight - $(this).height())/2 + "px";
 		},
 		left: function(){
-			return (wp[0].clientWidth - $(this)[0].clientWidth)/2 + "px";
+			return (wp[0].clientWidth - $(this).width())/2 + "px";
 		}
 	});
-	//alert(img.css("top"));
+	// alert(dom.width());
 }
+
 function imgShow(){
-	$('.mask').show();
-	$('.lightBox').show();
+	var html="";
+	html='<div class="mask"></div><div class="lightBox"><div class="con"><img id="img_id" src="images/123.jpg"></div><div class="btn"><a id="rtBtn" href="javascript:;">旋转</a>&nbsp;<a id="resetBtn" href="javascript:;">重置</a></div><a class="close" href="javascript:;" onclick="imgClose();" style="position:fixed;top:20px; right:20px;" title="关闭"></a></div>';
+
+	$(".lightBox_wp").append(html);
+
 	var wp=$('.mask');	
 	var img=$('.con');
-	$(window).load(function(){
+
+	$('.mask').show();
+	$('.lightBox').css("display","inline-block");
+
+	var img_id = $("#img_id");
+	img_id.load(function(){
+		//设置显示图片大小		
+		if(img_id.width() >= img_id.height()){
+			if(img_id.width() >= wp[0].clientHeight){
+				img_id.width(wp[0].clientHeight);
+			}
+		}else{
+			if(img_id.height() >= wp[0].clientHeight){
+				img_id.height(wp[0].clientHeight);
+			}
+		}
 		setPos(img);
 	});
-}
-function close(){
-	$('.mask').hide();
-	$('.lightBox').hide();
-}
-$(document).ready(function(){
-	var wp=$('.mask');	
-	var img=$('.con');
-	
-	var html="";
-		html='<div class="tools pa"><input id="idLeft" type="button" value="向左旋转" />&nbsp;<input id="idRight" type="button" value="向右旋转" />&nbsp;<input id="reset" type="button" value="重置" /></div>';
-
-	//img.after(html);
-	wp.bind({
-		mouseover: function(){
-			$(".tools").css("display","block");
-			/*$(".tools").mouseover(function(){
-				$(this).css("display","block");
-			});*/
-		},
-		mouseout: function(){
-			$(".tools").css("display","none");
-		}
-	});	
 
 	if(!$.support.leadingWhitespace){ //ie8及以下
-		var num = 0;		
+		var num = 0;
 		function keepMid(img){ //保持居中
 			img.css({
 				top: function(){
@@ -131,42 +130,27 @@ $(document).ready(function(){
 			img[0].style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+num+')';	
 			keepMid(img);
 		});
-		$('#idLeft').bind("click", function(){ 
-			num = (num - 1) % 4; 
-			img[0].style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+num+')'; 
-			keepMid(img);
-		});
 		$('#resetBtn').bind("click", function(){ 
 			num = 0; 
 			img[0].style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+num+')'; 
 			keepMid(img);
 		});
 	}else{
-		var angle=0, scale_num=0;
+		var angle=0;
 		$('#rtBtn').bind("click", function(){
 			angle += 90;
-			img.rotate({animateTo:angle});
-		});
-		$('#idLeft').bind("click", function(){
-			angle -= 90;
 			img.rotate({animateTo:angle});
 		});
 		$('#resetBtn').bind("click", function(){
 			angle = 0;
 			img.rotate({animateTo:angle});
-		});	
+		});
 	}
-	
-	
-	/*$('#idBig').click(function(){	
-		scale_num++;
-		var tp=2*scale_num;	
-		$('.img').css("-webkit-transform", "scale(2)");
-	});
-	$('#idSmall').click(function(){
-		$('.img').css("-webkit-transform", "scale(0.5)");
-	});*/
-});
+}
+function imgClose(){
+	$('.mask').remove();
+	$('.lightBox').remove();
+}
 </script>
 </body> 
 </html>
