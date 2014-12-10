@@ -40,6 +40,10 @@
 #lightBox #con{
 	position: fixed;
 	display: inline-block;
+	transition: transform 1s;
+	-webkit-transition: -webkit-transform 1s;
+	-moz-transition: -moz-transform 1s;
+	-o-transition: -o-transform 1s;
 }
 #lightBox img{
 	padding: 0;
@@ -136,7 +140,7 @@ function imgShow(img){
 			var angle=0;
 			rtBtn.onclick = function(){ 
 				angle += 90;
-				con.style[supportedCSS] = "rotate("+(angle%360)+"deg)";
+				con.style[supportedCSS] = "rotate("+angle+"deg)";
 			}
 			resetBtn.onclick = function(){ 
 				angle = 0;
