@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scale=no, traget-densitydpi=high-dpi"/>
+	<title>图片旋转 纯js</title>
+	<link rel="stylesheet" type="text/css" href="css/common.css" >
+</head>
+
+<body>
+<style>
+#idContainer{width:900px; height:600px; border:1px solid #555;}
+.btns{width:600px;}
+.img{
+	display: inline-block; 
+	max-width:600px;
+	cursor: pointer;
+	/*filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);*/
+}
+.tools{display:none;bottom: 5px; right: 10px; z-index:100;}
+#mask {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #555;
+	text-align: center;
+	z-index:999;
+	opacity: 0.5;
+	filter:Alpha(opacity=50);
+}
+#lightBox{
+	display: none;
+	position: fixed;
+	z-index: 1000;
+	/*border:5px solid #fff;*/
+}
+#lightBox #con{
+	position: fixed;
+	display: inline-block;
+}
+#lightBox img{
+	padding: 0;
+	margin:0;
+	box-shadow: 0 0 25px #444;
+}
+
+.btn{
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+}
+a.close{
+	width: 34px;
+	height: 34px;
+	background: url(images/close.png) no-repeat;	
+}
+a.close:hover{
+	background-position: 0 -41px;
+}
+</style>
+<div id="idContainer" class="pr" ><img class="img" src="images/123.jpg" onclick="imgShow(this);"></div>
+<div class="btns">
+	<input id="idVertical" type="button" value="垂直翻转" />
+	<input id="idHorizontal" type="button" value="水平翻转" />
+	<input id="idBig" type="button" value=" 放大 " />
+	<input id="idSmall" type="button" value=" 缩小 " />
+</div>
+
+<script>
+var supportedCSS,supportedCSSOrigin, styles=document.getElementsByTagName("head")[0].style,toCheck="transformProperty WebkitTransform OTransform msTransform MozTransform".split(" ");
+for (var a = 0; a < toCheck.length; a++) if (styles[toCheck[a]] !== undefined) { supportedCSS = toCheck[a]; }
+if (supportedCSS) {
+  supportedCSSOrigin = supportedCSS.replace(/[tT]ransform/,"TransformOrigin");
+  if (supportedCSSOrigin[0] == "T") supportedCSSOrigin[0] = "t";
+}
+
+function setPos(dom){ //设置居中显示
+	var wp=document.getElementById('mask');
+	dom.style.top = (wp.clientHeight - dom.clientHeight)/2 + "px";
+	dom.style.left = (wp.clientWidth - dom.clientWidth)/2 + "px";
+	//alert(dom.style.left);
+}
+
+function imgShow(img){
+	var html="";
+	html='<div id="mask"></div><div id="lightBox"><div id="con"><img id="img_id" src="'+img.src+'"></div><div class="btn"><a id="rtBtn" href="javascript:;">旋转</a>&nbsp;<a id="resetBtn" href="javascript:;">重置</a></div><a class="close" href="javascript:;" onclick="imgClose();" style="position:fixed;top:20px; right:20px;" title="关闭"></a></div>';
+
+	var lb_wp = document.createElement('div');
+	lb_wp.id = "lightBox_wp";
+	lb_wp.innerHTML = html;
+	document.body.appendChild(lb_wp);
+
+	var wp=document.getElementById('mask');
+	var con=document.getElementById('con');
+
+	wp.style.display = "block";
+	document.getElementById('lightBox').style.display = "inline-block";
+
+	var img_id = document.getElementById("img_id");
+	img_id.onload = function(){
+		//设置显示图片大小
+		if(img_id.width >= img_id.height){
+			if(img_id.width >= wp.clientHeight){
+				img_id.width = wp.clientHeight;
+			}
+		}else{
+			if(img_id.height >= wp.clientHeight){
+				img_id.height = wp.clientHeight;
+			}
+		}
+
+		setPos(con);
+
+		var rtBtn = document.getElementById('rtBtn');
+		var resetBtn = document.getElementById('resetBtn');
+		if(!supportedCSS){ //ie8及以下
+			var num = 0;
+			function keepMid(con){ //保持居中
+				con.style.top = (wp.clientHeight - con.offsetHeight)/2 + "px";
+				con.style.left = (wp.clientWidth - con.offsetWidth)/2 + "px";			
+			}
+			rtBtn.onclick = function(){ 
+				num = (num + 1) % 4; 
+				con.style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+num+')';	
+				keepMid(con);
+			}
+			resetBtn.onclick = function(){ 
+				num = 0; 
+				con.style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation='+num+')'; 
+				keepMid(con);
+			}
+		}else{
+			var angle=0;
+			rtBtn.onclick = function(){ 
+				angle += 90;
+				con.style[supportedCSS] = "rotate("+(angle%360)+"deg)";
+			}
+			resetBtn.onclick = function(){ 
+				angle = 0;
+				con.style[supportedCSS] = "rotate("+angle+"deg)";
+			}
+		}
+	}
+}
+function imgClose(){
+	var lb_wp=document.getElementById('lightBox_wp');
+	lb_wp.parentNode.removeChild(lb_wp);
+}
+</script>
+</body> 
+</html>
