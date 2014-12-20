@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+</head>
+<body>
+<div id="portal_block_49" class="sd_box">
+	<div id="portal_block_49_content" class="dxb_bc">
+		<div class="portal_block_summary">
+			<div id="_floatDiv_p" style="height: 230px;">
+                <div id="_floatDiv">
+                	<div id="f_calendar" style="font-size:14px;margin-bottom:10px;background:#f9f9f9;height:230px;overflow:hidden;">
+    <div class="ifsearch" id="ifSearch" data-citydata-url="http://www.ly.com/iflight/FlightInterAjax.aspx?action=SEARCHSOURCE" data-submit-url="http://www.ly.com/iflight/flightinterajax.aspx?action=SEARCHURL">
+        <div class="ifsearch_title" style="cursor:pointer;">
+            <span class="ifsearch_tab tab_on" data-type="hotel">特价酒店</span>
+            <span class="ifsearch_tab" data-type="iflight">特价机票</span>
+        </div>
+        <div class="ifsearch_content">
+			<form id="frm" accept-charset="utf-8" name="frm" action="http://www.booking.com/searchresults.html" method="get" target="_blank" onsubmit="checkoutDate();" autocomplete="off">
+            <input type="hidden" name="aid" value="361436">
+            <input type="hidden" name="error_url" value="http://www.booking.com/?aid=338809&amp;label=search;">
+            <input type="hidden" name="si" value="ai,co,ci,re,di">
+            <input type="hidden" name="label" value="">
+            <input type="hidden" name="lang" value="zh">
+            <input type="hidden" name="ifl" value="">
+            <input type="hidden" id="checkin_year_month" name="checkin_year_month" value="">
+            <input type="hidden" id="checkin_monthday" name="checkin_monthday" value="">
+            <input type="hidden" id="checkout_year_month" name="checkout_year_month" value="">
+            <input type="hidden" id="checkout_monthday" name="checkout_monthday" value="">
+
+            <div class="destination">
+                    <label class="lab" for="destination">目的地：</label><input type="text" id="destination" name="ss" value="{$capitalName}" autocomplete="off">
+            </div>
+            <div class="inout clearfix">
+                    <div class="in">
+                            <label for="checkin">入住日：</label><input type="text" id="checkin" name="checkin" value="" autocomplete="off"><span id="ico_in" class="date_icon"></span>
+                    </div>
+                    <div class="out">
+                            <label for="checkout">退房日：</label><input type="text" id="checkout" name="checkout" value="" autocomplete="off"><span id="ico_out" class="date_icon"></span>
+                    </div>
+            </div>
+            <div class="avail">
+                    <span>前台现付</span>
+                    <span>免费取消</span>
+                    <input class="s_btn" type="submit" value="搜索" />
+            </div>
+			</form>
+		</div>
+        <div class="ifsearch_content none" style="height:173px;">
+            <ul class="top_radio">
+                <li>
+                    <label for="airplaneRadio1"><input type="radio" name="airplaneInternatType" value="1" id="airplaneRadio1"><span class="type_txt">单程</span></label>
+                </li>
+                <li>
+                    <label for="airplaneRadio2"><input type="radio" name="airplaneInternatType" value="2" id="airplaneRadio2" checked="true"><span class="type_txt">往返</span></label>
+                </li>
+            </ul>
+            <div class="ifsearch_line">
+                <dl class="city_list" id="ileaveCityDiv">
+                    <dt class="list_tit">出发：</dt>
+                    <dd class="list_con">
+                        <input type="text" maxlength="20" name="iOrgPort" value="上海" focusnow="false">
+                    </dd>
+                </dl>
+                <dl class="city_list" id="iarriveCityDiv">
+                    <dt class="list_tit">到达：</dt>
+                    <dd class="list_con">
+                        <input type="text" maxlength="20" name="iArvPort" value="香港" focusnow="false">
+                    </dd>
+                </dl>
+                <div style="display:block;clear:both;height:0;overflow:hidden;"></div>
+            </div>
+            <div class="ifsearch_line">
+                <dl class="date_list" id="ileaveTimeDiv">
+                    <dt class="list_tit">出发日期：</dt>
+                    <dd class="list_con">
+                        <input type="text" name="idtGoDate" value="时间/日期" focusnow="false" class="date_input" data-mcalid="1">
+                    </dd>
+                </dl>
+            </div>
+            <div class="ifsearch_line">
+                <dl class="date_list" id="ibackTimeDiv">
+                    <dt class="list_tit">返回日期：</dt>
+                    <dd class="list_con">
+                        <input type="text" name="idtBackDate" value="时间/日期" focusnow="false" class="date_input" data-mcalid="2">
+                    </dd>
+                </dl>
+                <div style="display:block;clear:both;height:0;overflow:hidden;"></div>
+            </div>
+            <div style="display:block;clear:both;height:0;overflow:hidden;"></div>
+            <div class="ifsearch_bottom">
+                <a class="ifsearch_btn" id="ifsearchBtn" href="#" target="_blank"></a>
+                <span class="error_warn">请正确填写信息</span>
+            </div>
+        </div>
+    </div>
+</div></div></div>
+</div></div></div>
+<script type="text/javascript" src="js/myCalendar.js"></script>
+<script type="text/javascript" src="js/bookhotel.js"></script>
+</body>
+</html>
