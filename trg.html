@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>纯css三角形</title>
+<style type="text/css">
+.wp{background: #dfdfdf; margin: 20px 0;}
+.wp div{display: inline-block;}
+.triangle_up {
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 100px solid red;
+}
+.triangle_down {
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-top: 100px solid red;
+}
+.triangle_left {
+    width: 0;
+    height: 0;
+    border-top: 50px solid transparent;
+    border-right: 100px solid red;
+    border-bottom: 50px solid transparent;
+}
+.triangle_right {
+    width: 0;
+    height: 0;
+    border-top: 50px solid transparent;
+    border-left: 100px solid red;
+    border-bottom: 50px solid transparent;
+}
+.triangle_topleft {
+    width: 0;
+    height: 0;
+    border-top: 100px solid red;
+    border-right: 100px solid transparent;
+}
+.triangle_topright {
+    width: 0;
+    height: 0;
+    border-top: 100px solid red;
+    border-left: 100px solid transparent; 
+}
+.triangle_bottomleft {
+    width: 0;
+    height: 0;
+    border-bottom: 100px solid red;
+    border-right: 100px solid transparent;
+}
+.triangle_bottomright {
+    width: 0;
+    height: 0;
+    border-bottom: 100px solid red;
+    border-left: 100px solid transparent;
+}
+
+.triangle{
+	position: relative;
+	width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 100px solid red;
+}
+.triangle_i{
+	position: absolute;
+	width: 0;
+    height: 0;
+    border-left: 45px solid transparent;
+    border-right: 45px solid transparent;
+    border-bottom: 92px solid #fff;
+    top:5px;
+    left: -45px;
+}
+</style>
+</head>
+<body>
+	<div class="wp">
+		<div class="triangle_up"></div>
+		<div class="triangle_down"></div>
+		<div class="triangle_left"></div>
+		<div class="triangle_right"></div>
+		<div class="triangle_topleft"></div>
+		<div class="triangle_topright"></div>
+		<div class="triangle_bottomleft"></div>
+		<div class="triangle_bottomright"></div>
+	</div>
+	<div class="wp">
+		<div class="triangle">
+			<span class="triangle_i"></span>
+		</div>
+	</div>
+</body>
+</html>
