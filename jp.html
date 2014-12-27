@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>机票</title>
+<style type="text/css">
+</style>
+</head>
+<body>
+<form id="form" accept-charset="GBK" method="get" target="_blank" action="http://s.jipiao.trip.taobao.com/flight_search_result.htm">
+	<div class="conve-control-group" id="J_neType">
+		<div class="conve-radio conve-inline">
+			<input type="radio" name="tripType" value="0" id="ne_type1" checked="checked">
+			<label for="ne_type1">单程</label>
+		</div>
+		<div class="conve-radio conve-inline">
+			<input type="radio" name="tripType" value="1" id="ne_type2">
+			<label for="ne_type2">往返</label> 
+		</div> 
+	</div>
+	<div class="conve-control-group">    	                 
+        <div class="conve-input">
+            <label class="conve-label" for="J_neDepCity">出发</label>
+            <div class="conve-combox">
+                <input type="text" name="depCityName" maxlength="30" autocomplete="off" id="J_neDepCity" data-autotab="J_neArrCity" data-ip="1" placeholder="城市" aria-label="城市" class="conwidth ks-autocomplete-input">
+                <label class="conve-icon conve-icon-place" for="J_neDepCity" aria-describedby="按ENTER弹出热门城市"></label>
+            </div>
+            <input type="hidden" name="depCity" id="J_neDepCityCode">   
+        </div>
+        <div class="conve-input">
+            <label class="conve-label" for="J_neArrCity">到达</label>
+            <div class="conve-combox">
+                <input type="text" maxlength="30" class="conve-small-width ks-autocomplete-input" name="arrCityName" autocomplete="off" id="J_neArrCity" data-autotab="J_neDepTime" placeholder="城市" aria-label="城市">
+                <label class="conve-icon conve-icon-place" for="J_neArrCity" aria-describedby="按ENTER弹出热门城市"></label>
+            </div> 
+            <input type="hidden" name="arrCity" id="J_neArrCityCode">  
+        </div>      
+    </div>
+    <div class="conve-control-group">    	                  
+        <div class="conve-input conve-input-expand">
+            <label class="conve-label" for="J_neDepTime">出发</label>
+            <div class="calendar-input-wrap calendar-input-focus"><div class="calendar-start-icon trigger-icon-3120" aria-label="按ENTER弹出日期选择框"></div><input type="text" name="depDate" class="conve-middle-width trigger-node-3120 trigger-node-3122" id="J_neDepTime" autocomplete="off" data-autotab="J_neArrTime" maxlength="10" data-="" placeholder="日期" aria-label="日期"></div>
+        </div>         
+        <div class="conve-input" style="display: none;">
+            <label class="conve-label" for="J_neArrTime">返程</label>
+            <div class="calendar-input-wrap"><div class="calendar-end-icon trigger-icon-3120" aria-label="按ENTER弹出日期选择框"></div><input type="text" name="arrDate" class="conve-middle-width trigger-node-3120 trigger-node-3122" id="J_neArrTime" autocomplete="off" placeholder="日期" aria-label="日期" maxlength="10"></div>    	            
+         </div>
+    </div>
+
+    <input type="submit" class="conve-btn J_conveBtn" data-gold="tbtrip.15.10.1" value="查找" data-spm-click="gostr=/tbindex;locaid=d1" data-spm-anchor-id="1.7274553.754871973.d1">
+</form>
+</body>
+</html>

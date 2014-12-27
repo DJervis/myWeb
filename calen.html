@@ -3,14 +3,46 @@
 <head>
 	<meta charset="UTF-8">
 	<title>test</title>
+    <link rel="stylesheet" type="text/css" href="css/cssReset.css">
+<style type="text/css">
+ul li{ list-style: none;}
+.ifsearch{
+    font-size: 14px;
+}
+.ifsearch_content{
+    width: 250px;
+}
+.ifsearch .top_radio {
+    float: left;
+    width: 230px;
+}
+.ifsearch .top_radio li {
+    float: left;
+    margin-right: 15px;
+}
+.ifsearch_line {
+float: left;
+width: 230px;
+padding-top: 10px;
+}
+.ifsearch_line dl.city_list {
+width: 110px;
+margin-right: 5px;
+}
+.ifsearch_line dl, .ifsearch_line dt, .ifsearch_line dd {
+float: left;
+font-size: 12px;
+}
+.ifsearch_line input {
+width: 68px;
+height: 20px;
+padding-left: 2px;
+line-height: 20px;
+border: 1px solid #abadb3;
+}
+</style>
 </head>
 <body>
-<div id="portal_block_49" class="sd_box">
-	<div id="portal_block_49_content" class="dxb_bc">
-		<div class="portal_block_summary">
-			<div id="_floatDiv_p" style="height: 230px;">
-                <div id="_floatDiv">
-                	<div id="f_calendar" style="font-size:14px;margin-bottom:10px;background:#f9f9f9;height:230px;overflow:hidden;">
     <div class="ifsearch" id="ifSearch" data-citydata-url="http://www.ly.com/iflight/FlightInterAjax.aspx?action=SEARCHSOURCE" data-submit-url="http://www.ly.com/iflight/flightinterajax.aspx?action=SEARCHURL">
         <div class="ifsearch_title" style="cursor:pointer;">
             <span class="ifsearch_tab tab_on" data-type="hotel">特价酒店</span>
@@ -30,7 +62,7 @@
             <input type="hidden" id="checkout_monthday" name="checkout_monthday" value="">
 
             <div class="destination">
-                    <label class="lab" for="destination">目的地：</label><input type="text" id="destination" name="ss" value="{$capitalName}" autocomplete="off">
+                    <label class="lab" for="destination">目的地：</label><input type="text" id="destination" name="ss" value="曼谷" autocomplete="off">
             </div>
             <div class="inout clearfix">
                     <div class="in">
@@ -47,6 +79,8 @@
             </div>
 			</form>
 		</div>
+        <br >
+        <span class="ifsearch_tab" data-type="iflight">特价机票</span>
         <div class="ifsearch_content none" style="height:173px;">
             <ul class="top_radio">
                 <li>
@@ -95,9 +129,7 @@
             </div>
         </div>
     </div>
-</div></div></div>
-</div></div></div>
-<script type="text/javascript" src="js/myCalendar.js"></script>
+<script type="text/javascript" src="js/calendar.js"></script>
 <script type="text/javascript" src="js/bookhotel.js"></script>
 </body>
 </html>

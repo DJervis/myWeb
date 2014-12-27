@@ -3,10 +3,31 @@
 <head>
 	<meta charset="UTF-8">
 	<title>test</title>
+<style type="text/css">
+
+.wp_border{
+	position: relative;
+	width:0;
+	height:0;
+    border-left: 55px solid transparent;
+    border-right: 55px solid transparent;
+    border-bottom: 105px solid #000;
+}
+.triangle_up {
+	position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 100px solid #f00;
+    left: -50px;
+    top: 5px;
+}
+</style>
 </head>
 <body>
 	<form method="post" autocomplete="off" name="moderate" id="moderate" action="forum.php?mod=topicadmin&amp;action=moderate&amp;fid=4&amp;infloat=yes&amp;nopost=yes">
-		<table summary="forum_4" cellspacing="0" cellpadding="0">
+		<table id="tb" summary="forum_4" cellspacing="0" cellpadding="0">
 			<tbody>
 				<tr>
 					<td>
@@ -25,5 +46,25 @@
 			</tbody>
 		</table>
 	</form>
+
+	<div class="wp_border">
+		<span class="triangle_up"></span>
+	</div>
+<script type="text/javascript">
+	var table=document.getElementById('tb');
+	var tbody=document.createElement('tbody');
+	var div=document.createElement('div');
+	div.innerHTML="<table><tr><td>aaaaaaa</td></tr></table>";
+	table.appendChild(tbody);
+	table.replaceChild(div.firstChild.firstChild, tbody);
+	if(typeof window.scrollX == 'undefined'){
+		alert("111");
+		alert(document.body.scrollTop || document.documentElement.scrollTop);
+	}else{
+		alert("222");
+		alert(window.scrollX);
+	}	
+	
+</script>
 </body>
 </html>
