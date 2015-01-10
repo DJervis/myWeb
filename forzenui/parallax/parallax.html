@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>Parallax Test</title>
+
+	<link rel="stylesheet" type="text/css" href="css/parallax.css">
+	<link rel="stylesheet" type="text/css" href="css/parallax-animation.css">
+<style type="text/css">
+*{margin: 0 auto;padding: 0;}
+section[data-id="1"] {background: #3498db;}
+section[data-id="2"] {background: #40d47e;}
+section[data-id="3"] {background: #3498db;}
+section[data-id="4"] {background: #3498db;}
+.box1{
+	width: 100px;
+	height: 200px;
+	background: #fff;
+	position: absolute;
+	left: 35%;
+	top: 20%;
+}
+.box2{
+	width: 200px;
+	height: 100px;
+	background: #f00;
+	position: absolute;
+	left: 35%;
+	top: 20%;
+}
+.box3{
+	width: 100px;
+	height: 50px;
+	background: #555;
+	position: absolute;
+	left: 20%;
+	top: 30%;
+}
+</style>
+</head>
+<body ontouchstart>
+<div class="wrapper">
+<div class="pages">
+	<section class="page" data-id="1">
+		<div class="box1" data-animation="slideToBottom" data-timing-function="ease-in"></div>
+		<div class="box2" data-animation="slideToTop" data-delay="300" data-timing-function="ease-out"></div>
+		<div class="box3" data-animation="slideToRight" data-delay="600" data-timing-function="ease-out"></div>
+	</section>
+	<section class="page" data-id="2">
+		<div class="box1" data-animation="slideToBottom" data-timing-function="ease-in"></div>
+		<div class="box2" data-animation="slideToTop" data-delay="300" data-timing-function="ease-out"></div>
+		<div class="box3" data-animation="slideToRight" data-delay="600" data-timing-function="ease-out"></div>
+	</section>
+</div>
+</div>
+
+<script src="js/zepto.min.js"></script>
+<script src="js/effect.parallax.js"></script>
+<script>
+	$('.pages').parallax({
+		arrow:true
+	});
+</script>
+</body>
+</html>
