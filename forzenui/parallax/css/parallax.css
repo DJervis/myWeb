@@ -124,21 +124,21 @@ html,body {
     right: 10px;
     top: 50%;
     z-index: 10;
-    width: 25px;
-    height: 15px;
+    width: 80px;
+    height: 50px;
     background: url(../img/arrow.png) no-repeat;
     -webkit-background-size: 25px auto;
-    background-size: 25px auto;
+    background-size: 50px auto;
     -webkit-transform: translateY(-50%) rotate(-90deg);
     -ms-transform: translateY(-50%) rotate(-90deg);
     transform: translateY(-50%) rotate(-90deg)
 }
 
 .vertical .parallax-arrow {
-    left: 50%;
+    left: 55%;
     right: auto;
     top: auto;
-    bottom: 30px;
+    top: 85%;
     -webkit-transform: translateX(-50%) rotate(0deg);
     -ms-transform: translateX(-50%) rotate(0deg);
     transform: translateX(-50%) rotate(0deg)
