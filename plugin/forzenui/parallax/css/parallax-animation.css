@@ -75,6 +75,30 @@
     transform: translate3d(-2000px, 0, 0)
 }
 
+.page [data-animation="rotate"] {
+    opacity: 0;
+}
+@keyframes rotate {
+    from {
+        transform: rotate(0deg) scale(0,0);
+        opacity: 0;
+    }
+    to {
+        transform: rotate(720deg) scale(1,1);
+        opacity: 1;
+    }
+}
+@-webkit-keyframes rotate {
+    from {
+        transform: rotate(0deg) scale(0,0);
+        opacity: 0;
+    }
+    to {
+        transform: rotate(720deg) scale(1,1);
+        opacity: 1;
+    }
+}
+
 @-webkit-keyframes slideToTop {
     from {
         -webkit-transform: translate3d(0, 1000px, 0);

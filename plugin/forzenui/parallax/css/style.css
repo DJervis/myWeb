@@ -1,0 +1,139 @@
+*{margin: 0 auto;padding: 0;}
+section[data-id="1"] {background: #3498db;}
+section[data-id="2"] {background: #40d47e;}
+section[data-id="3"] {background: #3498db;}
+section[data-id="4"] {background: #3498db;}
+.box1{
+    width: 100px;
+    height: 200px;
+    background: #fff;
+    position: absolute;
+    left: 35%;
+    top: 20%;
+}
+.box2{
+    width: 200px;
+    height: 100px;
+    background: #f00;
+    position: absolute;
+    left: 35%;
+    top: 20%;
+}
+.box3{
+    width: 100px;
+    height: 50px;
+    background: #555;
+    position: absolute;
+    left: 20%;
+    top: 30%;
+}
+img{width: 100%;}
+.bg, .hands, .baidu, .baidu2, .txt1, .txt2, .txt3, .updown, .hand, .view, .finger{
+    position: absolute;left: 0;right: 0;margin: auto;
+}
+.bg{
+    width: 86%;
+    top:7%;
+}
+.shape{
+    position: absolute;
+    width:16%;
+    top: 16%;
+    left: 5%;
+}
+.shape2{
+    position: absolute;
+    width:14%;
+    top: 40%;
+    right: 3%;
+}
+.hands{
+    width: 50%;
+    top:15%;
+}
+.baidu{
+    width: 25%;
+    top:25%;
+}
+.baidu2{
+    width: 12%;
+    top:28%;
+}
+.txt1, .txt2, .txt3{position: absolute;}
+.txt1 {
+width: 60%;
+top: 60%;
+}
+.txt2 {
+width: 85%;
+top: 65%;
+}
+.txt3 {
+width: 70%;
+top: 73%;
+}
+.updown {
+width: 2.5%;
+top: 85%;
+left: -5%;
+}
+.finger {
+width: 10%;
+top: 85%;
+left: 5%;
+animation: page-tip 1.5s ease-in-out infinite;
+-webkit-animation: page-tip 1.5s ease-in-out infinite;
+}
+.view {
+width: 25%;
+top: 94%;
+}
+@keyframes page-tip {
+    0% {
+        top: 90%;
+        opacity: 0;
+    }
+    50% {
+        top: 82..5%;
+        opacity: 1;        
+    }
+    100% {
+        top: 85%;
+        opacity: 0;
+    }
+}
+@-webkit-keyframes page-tip {
+    0% {
+        top: 90%;
+        opacity: 0;
+    }
+    50% {
+        top: 82..5%;
+        opacity: 1;        
+    }
+    100% {
+        top: 85%;
+        opacity: 0;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg) scale(0,0);
+        opacity: 0;
+    }
+    to {
+        transform: rotate(720deg) scale(1,1);
+        opacity: 1;
+    }
+}
+@-webkit-keyframes rotate {
+    from {
+        transform: rotate(0deg) scale(0,0);
+        opacity: 0;
+    }
+    to {
+        transform: rotate(720deg) scale(1,1);
+        opacity: 1;
+    }
+}
