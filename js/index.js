@@ -89,12 +89,12 @@ function scrollToS(end_height, stime){ //滚动函数（高度，时间）
 }
 
 window.onscroll=function(){
-	alert("aaaaa");
+	//alert("aaaaa");
 }
 var onSc=window.onscroll;
 if (typeof onSc == 'function') {
 	window.onscroll = function(){
 		onSc.call(this);
-		alert("bbbbbb");
+		//alert("bbbbbb");
 	}
 }
