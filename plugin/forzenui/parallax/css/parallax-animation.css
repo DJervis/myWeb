@@ -78,25 +78,8 @@
 .page [data-animation="rotate"] {
     opacity: 0;
 }
-@keyframes rotate {
-    from {
-        transform: rotate(0deg) scale(0,0);
-        opacity: 0;
-    }
-    to {
-        transform: rotate(720deg) scale(1,1);
-        opacity: 1;
-    }
-}
-@-webkit-keyframes rotate {
-    from {
-        transform: rotate(0deg) scale(0,0);
-        opacity: 0;
-    }
-    to {
-        transform: rotate(720deg) scale(1,1);
-        opacity: 1;
-    }
+.page [data-animation="scale"] {
+    opacity: 0;
 }
 
 @-webkit-keyframes slideToTop {
@@ -440,5 +423,47 @@
     to {
         -webkit-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0)
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg) scale(0,0);
+        opacity: 0;
+    }
+    to {
+        transform: rotate(720deg) scale(1,1);
+        opacity: 1;
+    }
+}
+@-webkit-keyframes rotate {
+    from {
+        transform: rotate(0deg) scale(0,0);
+        opacity: 0;
+    }
+    to {
+        transform: rotate(720deg) scale(1,1);
+        opacity: 1;
+    }
+}
+
+@keyframes scale {
+    from {
+        transform: scale(0,0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1,1);
+        opacity: 1;
+    }
+}
+@-webkit-keyframes scale {
+    from {
+        transform: scale(0,0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1,1);
+        opacity: 1;
     }
 }
