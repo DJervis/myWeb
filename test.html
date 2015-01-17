@@ -1,70 +1,282 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 	<meta charset="UTF-8">
-	<title>test</title>
-<style type="text/css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scale=no, traget-densitydpi=high-dpi"/>
+	<title>--web--</title>
+	<link rel="stylesheet" type="text/css" href="css/common.css">
+	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>	
+<style>
+body { font: 16px Tahoma,'Simsun';}
+a{text-decoration: none;color: #37a;}
+a:hover{text-decoration: underline;}
+.box {width: 100%;margin-top: 30px;}
+#btn, #btn2, #btn_ajax { display: block; width: 150px; height: 30px;}
+p {word-wrap: break-word;}
 
-.wp_border{
-	position: relative;
-	width:0;
-	height:0;
-    border-left: 55px solid transparent;
-    border-right: 55px solid transparent;
-    border-bottom: 105px solid #000;
+#aaa { font-weight: 700; vertical-align: baseline;}
+input:after {content: 'aaa';background: #000;}
+
+.loading {display: block; width: 128px; height: 76px; background: url(images/loading.gif) no-repeat;}
+i{
+    display: block;
+    position: relative;
+    top:10px;
+    left: 0px;
+    width: 8px;
+    height: 8px;
+    border: #37a solid;
+    border-width: 2px 2px 0 0;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    filter:progid:DXImageTransform.Microsoft.Matrix(SizingMethod="auto expand",M11=0.7,M12=-0.7,M21=0.7,M22=0.7);
 }
-.triangle_up {
-	position: absolute;
-    width: 0;
-    height: 0;
-    border-left: 50px solid transparent;
-    border-right: 50px solid transparent;
-    border-bottom: 100px solid #f00;
-    left: -50px;
-    top: 5px;
+#reply_thread span {
+	display: block;
+	border: 1px solid #d3d5dc;
+	width: 76px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-o-border-radius: 3px;
+	-ms-border-radius: 3px;
+	color: 
 }
+
+.ti, .li{width: 100px;}
+.li li {height:30px;}
+.li{display: none;}
+.ti:hover .li {display: block;}
 </style>
 </head>
 <body>
-	<form method="post" autocomplete="off" name="moderate" id="moderate" action="forum.php?mod=topicadmin&amp;action=moderate&amp;fid=4&amp;infloat=yes&amp;nopost=yes">
-		<table id="tb" summary="forum_4" cellspacing="0" cellpadding="0">
-			<tbody>
-				<tr>
-					<td>
-						<div class="tl">
-							<a href="#">xxxxxxxxxxxxxxxxxxxxx</a>
-							<img src="images/img.jpg">
-							<img src="images/img.jpg">
-							<img src="images/img.jpg">
-						</div>
-						<span>ssss</span>
-						<span>dddd</span>
-						<span>cccc</span>
-						<span>vvvv</span>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</form>
-
-	<div class="wp_border">
-		<span class="triangle_up"></span>
+	<?php include 'ex.html' ?>
+<ul>
+	<li class="ti">aaa
+		<ul class="li">
+			<li>aaa</li>
+			<li>aaa</li>
+			<li>aaa</li>
+		</ul>
+	</li>
+	<li class="ti">bbb
+		<ul class="li">
+			<li>bbb</li>
+			<li>bbb</li>
+			<li>bbb</li>
+		</ul>
+	</li>
+	<li class="ti">ccc
+		<ul class="li">
+			<li>ccc</li>
+			<li>ccc</li>
+			<li>ccc</li>
+		</ul>
+	</li>
+	<li class="ti">dddd
+		<ul class="li">
+			<li>ddd</li>
+			<li>ddd</li>
+			<li>ddd</li>
+		</ul>
+	</li>
+</ul>
+<div>
+	Test = <span id="test"></span>
+</div>
+<div class="box clearfix">
+	<i class="fl"></i>
+	<a class="fl" id="reply_thread" href="#"><span>回复</span></a>
+</div>
+<div class="box">
+	<input id="search" type="search" placeholder="search">
+	<a id="aaa" href="javascript:;">isWeixin?</a>
+</div>
+<div class="box">
+	<button id="btn_ajax">btn_ajax</button>
+	<div id="my_div"></div>
+</div>
+<div class="box">
+	<button class="pg_up" onclick="changePg(0);">上一页</button>
+	<select id="page" class="page">
+		<option value="1">第 1 页</option>
+		<option value="2">第 2 页</option>
+		<option value="3">第 3 页</option>
+		<option value="4">第 4 页</option>
+		<option value="5">第 5 页</option>
+		<option value="6">第 6 页</option>
+		<option value="7">第 7 页</option>
+		<option value="8">第 8 页</option>
+		<option value="9">第 9 页</option>
+		<option value="10">第 10 页</option>
+		<option value="11">第 11 页</option>
+		<option value="12">第 12 页</option>
+		<option value="13">第 13 页</option>
+	</select>
+	<button class="pg_dn" onclick="changePg(1);">下一页</button>
+</div>
+<div class="box">
+	<button id="btn" >点击下滑</button>
+	<div class="box">
+		<h2>ueditor</h2>
+	    <script id="editor" type="text/plain" style="width:500px;height:200px;"></script>
+	    <script type="text/javascript" charset="utf-8" src="plugin/ueditor/ueditor.config.js"></script>
+	    <script type="text/javascript" charset="utf-8" src="plugin/ueditor/ueditor.all.min.js"> </script>
+	    <script type="text/javascript">var ue=UE.getEditor("editor");</script>
 	</div>
-<script type="text/javascript">
-	var table=document.getElementById('tb');
-	var tbody=document.createElement('tbody');
-	var div=document.createElement('div');
-	div.innerHTML="<table><tr><td>aaaaaaa</td></tr></table>";
-	table.appendChild(tbody);
-	table.replaceChild(div.firstChild.firstChild, tbody);
-	if(typeof window.scrollX == 'undefined'){
-		alert("111");
-		alert(document.body.scrollTop || document.documentElement.scrollTop);
-	}else{
-		alert("222");
-		alert(window.scrollX);
-	}	
-	
-</script>
+	<div style="width:100%;height:1600px;">
+		<p>
+			fdjaklfjdskafljdsaklfjdsklafjdksaljfdksalfjklafjdkslafjla
+			fdjaklfjdskafljdsaklfjdsklafjdksaljfdksalfjklafjdkslafjla
+			让body的scrollTop等于pos的top，就实现了滚动
+			让body的scrollTop等于pos的top，就实现了滚动
+			让body的scrollTop等于pos的top，就实现了滚动
+			让body的scrollTop等于pos的top，就实现了滚动
+			让body的scrollTop等于pos的top，就实现了滚动
+			让body的scrollTop等于pos的top，就实现了滚动
+			让body的scrollTop等于pos的top，就实现了滚动
+			让body的scrollTop等于pos的top，就实现了滚动
+		</p>
+	</div>
+	 <div id="pos"><h1>......Here.......</h1></div>
+	 <div style="width:100%;height:600px;">
+		<p>
+			fdjaklfjdskafljdsaklfjdsklafjdksaljfdksalfjklafjdkslafjla
+			fdjaklfjdskafljdsaklfjdsklafjdksaljfdksalfjklafjdkslafjla
+			让body的scrollTop等于pos的top，就实现了滚动
+			让body的scrollTop等于pos的top，就实现了滚动
+			让body的scrollTop等于pos的top，就实现了滚动
+			让body的scrollTop等于pos的top，就实现了滚动
+			让body的scrollTop等于pos的top，就实现了滚动
+			让body的scrollTop等于pos的top，就实现了滚动
+			让body的scrollTop等于pos的top，就实现了滚动
+			让body的scrollTop等于pos的top，就实现了滚动
+		</p>
+		<button id="btn2">点击上滑</button>
+	</div>
+</div>
+ <!--<script type="text/javascript" src="js/index.js"></script>-->
+ <script type="text/javascript" src="js/ajax.js"></script>
+ <script type="text/javascript" src="plugin/test.js"></script>
+ <script type="text/javascript">
+ TEST.run("test");
+function $(id) {
+	return !id ? null : document.getElementById(id);
+}
+
+function $C(classname, ele, tag) {
+	var returns = [];
+	ele = ele || document;
+	tag = tag || '*';
+	if(ele.getElementsByClassName) {
+		var eles = ele.getElementsByClassName(classname);
+		if(tag != '*') {
+			for (var i = 0, L = eles.length; i < L; i++) {
+				if (eles[i].tagName.toLowerCase() == tag.toLowerCase()) {
+						returns.push(eles[i]);
+				}
+			}
+		} else {
+			returns = eles;
+		}
+	}else {
+		eles = ele.getElementsByTagName(tag);
+		var pattern = new RegExp("(^|\\s)"+classname+"(\\s|$)");
+		for (i = 0, L = eles.length; i < L; i++) {
+				if (pattern.test(eles[i].className)) {
+						returns.push(eles[i]);
+				}
+		}
+	}
+	return returns;
+}
+/*
+*css(name)：访问第一匹配元素的样式属性
+*css(name,value)：在所有匹配的元素中，设置一个样式属性的值
+*css(properties)：把一个“名/值对”对象设置为所有匹配元素的样式属性
+*css(name,function(index,value))：在所有匹配的元素中，设置一个样式属性的值
+*/
+function css(obj, attr, value) {
+    switch (arguments.length) {
+        case 2:
+            if (typeof arguments[1] == "object") {    //批量设置属性
+                for (var i in attr) obj.style[i] = attr[i]
+            }
+            else {    // 读取属性值
+                return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj, null)[attr]
+            }
+            break;
+        case 3:
+            //设置属性
+            obj.style[attr] = value;
+            break;
+        default:
+            return "";
+    }
+}
+/*
+*addClass(class)：为每个匹配的元素添加指定的类名
+*removeClass(class)：从所有匹配的元素中删除全部或者指定的类
+*toggleClass(class)：如果存在（不存在）就删除（添加）一个类
+*/
+function hasClass(obj, cls) {
+    return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+}
+function addClass(obj, cls) {
+    if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+}
+function removeClass(obj, cls) {
+    if (hasClass(obj, cls)) {
+        var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+        obj.className = obj.className.replace(reg, ' ');
+    }
+}
+function toggleClass(obj,cls){  
+    if(hasClass(obj,cls)){  
+        removeClass(obj, cls);  
+    }else{  
+        addClass(obj, cls);  
+    }  
+}
+/*---------------------------滚动函数（高度，时间）---------------------------------*/
+function scrollToS(end_height, stime){ //滚动函数（高度，时间）
+    var scrollTop=document.documentElement.scrollTop || document.body.scrollTop;
+    var speed=(end_height - scrollTop)/stime;
+    var top=document.documentElement.scrollTop || document.body.scrollTop;
+    var timer=setInterval(function(){
+        var clientHeight=document.documentElement.clientHeight || document.body.clientHeight;
+        var scrollHeight=document.documentElement.scrollHeight || document.body.scrollHeight;
+        var isBottom=0;
+        if(top + clientHeight >= scrollHeight){
+            isBottom=1;
+        }
+        top += speed;
+        if(speed >= 0){
+            if(top >= end_height){
+                window.scrollTo(0, end_height);
+                clearInterval(timer);
+            }else if(isBottom==1){
+                //alert('已到达最底部');
+                clearInterval(timer);               
+            }else{
+                window.scrollTo(0, top);
+            }
+        }else if(speed < 0){
+            if(top <= end_height){
+                window.scrollTo(0, end_height);
+                clearInterval(timer);
+            }else{
+                window.scrollTo(0, top);
+            }
+        }
+    },1);
+}
+ </script>
 </body>
 </html>

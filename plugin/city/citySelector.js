@@ -165,7 +165,7 @@ Vcity.regExChiese = /([\u4E00-\u9FA5\uf900-\ufa2d]+)/;
 Vcity._template = [
     '<p class="tip">热门城市(支持汉字/拼音)</p>',
     '<ul>',
-    '<li class="on">国内热门</li>',
+    '<li class="on">热门城市</li>',
     '<li>ABCDEFGH</li>',
     '<li>IJKLMNOP</li>',
     '<li>QRSTUVWXYZ</li>',
@@ -348,6 +348,13 @@ Vcity.CitySelector.prototype = {
             if(!that.cityBox){
                 that.createWarp();
             }else if(!!that.cityBox && Vcity._m.hasClass('hide',that.cityBox)){
+                //console.log(that.input);
+                var inputPos = Vcity._m.getPos(that.input);
+                var div = that.rootDiv;
+                div.style.position = 'absolute';
+                div.style.left = inputPos.left + 'px';
+                div.style.top = inputPos.bottom + 'px';
+                div.style.zIndex = 999999;
                 // slideul 不存在或者 slideul存在但是是隐藏的时候 两者不能共存
                 if(!that.ul || (that.ul && Vcity._m.hasClass('hide',that.ul))){
                     Vcity._m.removeClass('hide',that.cityBox);
