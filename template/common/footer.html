@@ -1,6 +1,77 @@
 </div>
 <footer>
-	<div class="wrapper">copyright@2015 DJer</div>
+	<div class="wrapper foot">Copyright@2015 DJer | Powered by DJer | Designed by Theme Park</div>
 </footer>
+<script type="text/javascript">
+	$.fn.fnImgBigShow = function(options) {
+	        options = options || {};
+	        var def = {
+	            w:500,
+	            h:375
+	        };
+	        var sets = $.extend(def, options);
+	        $(this).click(function() {
+	            var imgId = $(this).attr("rel"), imgUrl = $(this).attr("href");
+	            var beAppended = '<img id="designImgShow_' + imgId + '" src="' + imgUrl + '" style="width:' + sets.w + "px; height:" + sets.h + 'px; padding:5px; border:1px solid #cccccc; background:white; position:absolute; z-index:3;" />';
+	            var sTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+	            if ($("#blank").length) {
+	                $("#blank").show();
+	            } else {
+	                $("body").prepend('<div id="blank"></div>');
+	            }
+	            if ($("#designImgShow_" + imgId).length) {
+	                $("#designImgShow_" + imgId).show();
+	            } else {
+	                $("body").append(beAppended);
+	            }
+	            $("#blank").height($("body").height()).css("opacity", "0.6");
+	            $("#designImgShow_" + imgId).css({
+	                left:($("body").width() - $("#designImgShow_" + imgId).width()) / 2,
+	                top:sTop + ($(window).height() - $("#designImgShow_" + imgId).height()) / 2
+	            });
+	            $("#blank").click(function() {
+	                $("#designImgShow_" + imgId).hide();
+	                $("#blank").remove();
+	            });
+	            return false;
+	        });
+	    };
+	var fnGetMM = function() {
+	        $.get("php/mmClock.php", {}, function(data) {
+	            if (data !== []) {
+	            	//$('.mmClock').html(data);
+	            	//console.log(data);
+	                var json = eval('('+data+')');
+	                var src = json.src, id = json.id;
+	                if (src) {
+	                    $("#clockMM_a").attr("href", src).attr("rel", id);
+	                    $("#clockMM_img").attr("src", src);
+	                    $("#clockMM_img").show();
+	                    $("#clockMM_a").fnImgBigShow({
+	                        w:630,
+	                        h:420
+	                    });
+	                    return false;
+	                }
+	                
+	            }
+	        });
+	    };
+	fnGetMM();
+	var fnShowClock = function() {
+	        var myDate = new Date();
+	        var sec = myDate.getSeconds();
+	        var lefts = 60 - sec;
+	        if (lefts < 10) {
+	            lefts = "0" + lefts;
+	        }
+	        $("#mmSecond").text(lefts);
+	        if (sec === 0) {
+	            fnGetMM();
+	        }
+	        setTimeout(fnShowClock, 1e3);
+	    };
+	fnShowClock();
+</script>
 </body>
 </html>

@@ -7,7 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="css/common.css">
 	<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>	
 <style>
-body { font: 16px Tahoma,'Simsun';}
+body { font: 16px Tahoma,'Simsun'; margin: 0;padding: 0;}
 a{text-decoration: none;color: #37a;}
 a:hover{text-decoration: underline;}
 .box {width: 100%;margin-top: 30px;}
@@ -48,47 +48,52 @@ i{
 	-ms-border-radius: 3px;
 	color: 
 }
-
-.ti, .li{width: 100px;}
+ul{width: 800px;padding: 0;}
+.ti {width: 180px; height:30px; background:#eee;display: inline-block;text-align: -webkit-match-parent;}
 .li li {height:30px;}
 .li{display: none;}
-.ti:hover .li {display: block;}
 </style>
 </head>
 <body>
-	<?php include 'ex.html' ?>
 
-	<a href="http://s.click.taobao.com/t?e=m%3D2%26s%3DwSlDCePiseUcQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClAjtn%2F3Z2aPpNQkZ7jQiylv7aOy4YdVCVN7whbbjm0lq8Ryu4zfTlkz1G9evWuDKCTn7uq6sLYIqu0Q7QOybCaQy9AmARIwX9K0Mys%2FYZWrO9uN4uDgh23CQvKjwAGAfHbUSl%2FXyU27E2sPyIxgaDSthpUjgLf4vx%2FDeqUyg0%2FmS7cSpj5qSCmbA%3D&tripType=0&depCityName=%C9%CF%BA%A3&arrCityName=%CF%E3%B8%DB&depDate=20150120&arrDate=&searchBy=1404&scene=%CA%AE%C1%F9%B7%AC">xxxxxxxx</a>
-<ul>
-	<li class="ti">aaa
-		<ul class="li">
-			<li>aaa</li>
-			<li>aaa</li>
-			<li>aaa</li>
-		</ul>
-	</li>
-	<li class="ti">bbb
-		<ul class="li">
-			<li>bbb</li>
-			<li>bbb</li>
-			<li>bbb</li>
-		</ul>
-	</li>
-	<li class="ti">ccc
-		<ul class="li">
-			<li>ccc</li>
-			<li>ccc</li>
-			<li>ccc</li>
-		</ul>
-	</li>
-	<li class="ti">dddd
-		<ul class="li">
-			<li>ddd</li>
-			<li>ddd</li>
-			<li>ddd</li>
-		</ul>
-	</li>
-</ul>
+<div class="mmClock">
+	<span id="mmSecond"></span>
+	<a id="clockMM_a" href="">
+		<img id="clockMM_img" src="" style="width:320px;">
+	</a>
+</div>
+<div style="transform:translate3d(0,0,0) scale(1);">
+	<ul>
+		<li class="ti">aaa
+			<ul class="li">
+				<li>aaa</li>
+				<li>aaa</li>
+				<li>aaa</li>
+			</ul>
+		</li>
+		<li class="ti">bbb
+			<ul class="li">
+				<li>bbb</li>
+				<li>bbb</li>
+				<li>bbb</li>
+			</ul>
+		</li>
+		<li class="ti">ccc
+			<ul class="li">
+				<li>ccc</li>
+				<li>ccc</li>
+				<li>ccc</li>
+			</ul>
+		</li>
+		<li class="ti">dddd
+			<ul class="li">
+				<li>ddd</li>
+				<li>ddd</li>
+				<li>ddd</li>
+			</ul>
+		</li>
+	</ul>
+</div>
 <div>
 	Test = <span id="test"></span>
 </div>
@@ -168,117 +173,75 @@ i{
  <script type="text/javascript" src="plugin/test.js"></script>
  <script type="text/javascript">
  TEST.run("test");
-function $(id) {
-	return !id ? null : document.getElementById(id);
-}
-
-function $C(classname, ele, tag) {
-	var returns = [];
-	ele = ele || document;
-	tag = tag || '*';
-	if(ele.getElementsByClassName) {
-		var eles = ele.getElementsByClassName(classname);
-		if(tag != '*') {
-			for (var i = 0, L = eles.length; i < L; i++) {
-				if (eles[i].tagName.toLowerCase() == tag.toLowerCase()) {
-						returns.push(eles[i]);
-				}
-			}
-		} else {
-			returns = eles;
-		}
-	}else {
-		eles = ele.getElementsByTagName(tag);
-		var pattern = new RegExp("(^|\\s)"+classname+"(\\s|$)");
-		for (i = 0, L = eles.length; i < L; i++) {
-				if (pattern.test(eles[i].className)) {
-						returns.push(eles[i]);
-				}
-		}
-	}
-	return returns;
-}
-/*
-*css(name)：访问第一匹配元素的样式属性
-*css(name,value)：在所有匹配的元素中，设置一个样式属性的值
-*css(properties)：把一个“名/值对”对象设置为所有匹配元素的样式属性
-*css(name,function(index,value))：在所有匹配的元素中，设置一个样式属性的值
-*/
-function css(obj, attr, value) {
-    switch (arguments.length) {
-        case 2:
-            if (typeof arguments[1] == "object") {    //批量设置属性
-                for (var i in attr) obj.style[i] = attr[i]
+$.fn.fnImgBigShow = function(options) {
+        options = options || {};
+        var def = {
+            w:500,
+            h:375
+        };
+        var sets = $.extend(def, options);
+        $(this).click(function() {
+            var imgId = $(this).attr("rel"), imgUrl = $(this).attr("href");
+            var beAppended = '<img id="designImgShow_' + imgId + '" src="' + imgUrl + '" style="width:' + sets.w + "px; height:" + sets.h + 'px; padding:5px; border:1px solid #cccccc; background:white; position:absolute; z-index:3;" />';
+            var sTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+            if ($("#blank").length) {
+                $("#blank").show();
+            } else {
+                $("body").prepend('<div id="blank"></div>');
             }
-            else {    // 读取属性值
-                return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj, null)[attr]
+            if ($("#designImgShow_" + imgId).length) {
+                $("#designImgShow_" + imgId).show();
+            } else {
+                $("body").append(beAppended);
             }
-            break;
-        case 3:
-            //设置属性
-            obj.style[attr] = value;
-            break;
-        default:
-            return "";
-    }
-}
-/*
-*addClass(class)：为每个匹配的元素添加指定的类名
-*removeClass(class)：从所有匹配的元素中删除全部或者指定的类
-*toggleClass(class)：如果存在（不存在）就删除（添加）一个类
-*/
-function hasClass(obj, cls) {
-    return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
-}
-function addClass(obj, cls) {
-    if (!this.hasClass(obj, cls)) obj.className += " " + cls;
-}
-function removeClass(obj, cls) {
-    if (hasClass(obj, cls)) {
-        var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-        obj.className = obj.className.replace(reg, ' ');
-    }
-}
-function toggleClass(obj,cls){  
-    if(hasClass(obj,cls)){  
-        removeClass(obj, cls);  
-    }else{  
-        addClass(obj, cls);  
-    }  
-}
-/*---------------------------滚动函数（高度，时间）---------------------------------*/
-function scrollToS(end_height, stime){ //滚动函数（高度，时间）
-    var scrollTop=document.documentElement.scrollTop || document.body.scrollTop;
-    var speed=(end_height - scrollTop)/stime;
-    var top=document.documentElement.scrollTop || document.body.scrollTop;
-    var timer=setInterval(function(){
-        var clientHeight=document.documentElement.clientHeight || document.body.clientHeight;
-        var scrollHeight=document.documentElement.scrollHeight || document.body.scrollHeight;
-        var isBottom=0;
-        if(top + clientHeight >= scrollHeight){
-            isBottom=1;
+            $("#blank").height($("body").height()).css("opacity", "0.6");
+            $("#designImgShow_" + imgId).css({
+                left:($("body").width() - $("#designImgShow_" + imgId).width()) / 2,
+                top:sTop + (cHeight - $("#designImgShow_" + imgId).height()) / 2
+            });
+            $("#blank").click(function() {
+                $("#designImgShow_" + imgId).hide();
+                $("#blank").remove();
+            });
+            return false;
+        });
+    };
+var fnGetMM = function() {
+        $.get("php/mmClock.php", {}, function(data) {
+            if (data !== []) {
+            	//$('.mmClock').html(data);
+            	//console.log(data);
+                var json = eval('('+data+')');
+                var src = json.src, id = json.id;
+                if (src) {
+                    $("#clockMM_a").attr("href", src).attr("rel", id);
+                    $("#clockMM_img").attr("src", src);
+                    $("#clockArea").show();
+                    $("#clockMM_a").fnImgBigShow({
+                        w:630,
+                        h:421
+                    });
+                    return false;
+                }
+                
+            }
+        });
+    };
+fnGetMM();
+var fnShowClock = function() {
+        var myDate = new Date();
+        var sec = myDate.getSeconds();
+        var lefts = 60 - sec;
+        if (lefts < 10) {
+            lefts = "0" + lefts;
         }
-        top += speed;
-        if(speed >= 0){
-            if(top >= end_height){
-                window.scrollTo(0, end_height);
-                clearInterval(timer);
-            }else if(isBottom==1){
-                //alert('已到达最底部');
-                clearInterval(timer);               
-            }else{
-                window.scrollTo(0, top);
-            }
-        }else if(speed < 0){
-            if(top <= end_height){
-                window.scrollTo(0, end_height);
-                clearInterval(timer);
-            }else{
-                window.scrollTo(0, top);
-            }
+        $("#mmSecond").text(lefts);
+        if (sec === 0) {
+            fnGetMM();
         }
-    },1);
-}
+        setTimeout(fnShowClock, 1e3);
+    };
+    fnShowClock();
  </script>
 </body>
 </html>

@@ -88,7 +88,7 @@ animation: page-tip 1.5s ease-in-out infinite;
 width: 25%;
 top: 94%;
 }
-@keyframes page-tip {
+@-webkit-keyframes page-tip {
     0% {
         top: 90%;
         opacity: 0;
