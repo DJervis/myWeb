@@ -17,7 +17,7 @@
 	//echo '<a href="'.$match[1][0].'"><img width="320px" src="'.$match[1][0].'">';
 	/*
 	foreach($match as $key => $value){		
-		echo $value[0];
+		echo $value[$key];
 	}
 	*/
 	$time = time();

@@ -72,6 +72,35 @@
 	        setTimeout(fnShowClock, 1e3);
 	    };
 	fnShowClock();
+	var getImg = function(){
+		$.get('php/img.php', function(data){
+			var arr = eval(data);
+			//console.log(arr.length);
+			var list = $('.img_list');
+			for(var i=0;i<arr.length;i++){				
+				var img = '<li><img width="600px" src="images/play/'+arr[i]+'"></li>';
+				list.append(img);
+			}
+			var v_width = $('.play_wp').width(),
+				pageCount = list.find('li').length;
+			list.width(v_width*pageCount);
+		});
+	}
+$(function(){
+	getImg();
+	var wp = $('.play_wp'),
+		imglist = $('.img_list'),
+		btns = $('.play_btns'),
+		btn_a = btns.find('a'),
+		v_width = wp.width();
+	var page = 1;
+	var pageCount = imglist.find('li').length;
+	alert(pageCount);
+	if(pageCount){
+		imglist.width(v_width*pageCount);
+	}
+
+});
 </script>
 </body>
 </html>
