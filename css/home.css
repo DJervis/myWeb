@@ -2,8 +2,7 @@
 body{background: url(../images/bg.jpg) repeat;}
 a {color: #37a;}
 .wrapper {
-	width: 65%; 
-	min-width: 960px;
+	width: 1140px;
 	margin: 0 auto;
 }
 /* header */
@@ -45,7 +44,7 @@ header {
 	}
 }
 /* main */
-.main{width: 80%;}
+.main{width: 960px;}
 h2.title {
 	height: 35px;
 	line-height: 35px;
@@ -130,6 +129,21 @@ h2.title {
 }
 .img_list li {
 	display: inline-block;
+}
+.prevBtn, .nextBtn {
+	display: block;
+	width: 40px;
+	height: 40px;
+	background: #fff;
+	position: absolute;
+}
+.prevBtn {
+	top: 130px;
+	left: 0;
+}
+.nextBtn {
+	top: 130px;
+	right: 0;
 }
 /* footer */
 footer{

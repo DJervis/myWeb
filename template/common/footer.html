@@ -47,6 +47,7 @@
 	                    $("#clockMM_a").attr("href", src).attr("rel", id);
 	                    $("#clockMM_img").attr("src", src);
 	                    $("#clockMM_img").show();
+	                    $(".mmSec").show();
 	                    $("#clockMM_a").fnImgBigShow({
 	                        w:630,
 	                        h:420
@@ -73,17 +74,15 @@
 	    };
 	fnShowClock();
 	var getImg = function(){
+		$.ajaxSetup({async : false});
+		var list = $('.img_list');
 		$.get('php/img.php', function(data){
 			var arr = eval(data);
-			//console.log(arr.length);
-			var list = $('.img_list');
+			//console.log(arr.length);			
 			for(var i=0;i<arr.length;i++){				
 				var img = '<li><img width="600px" src="images/play/'+arr[i]+'"></li>';
 				list.append(img);
 			}
-			var v_width = $('.play_wp').width(),
-				pageCount = list.find('li').length;
-			list.width(v_width*pageCount);
 		});
 	}
 $(function(){
@@ -95,7 +94,6 @@ $(function(){
 		v_width = wp.width();
 	var page = 1;
 	var pageCount = imglist.find('li').length;
-	alert(pageCount);
 	if(pageCount){
 		imglist.width(v_width*pageCount);
 	}
