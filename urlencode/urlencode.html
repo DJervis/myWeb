@@ -4,7 +4,10 @@
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
+
+
 </head>
+
 <body>
 	<input type="text" id="input" value="中文">
 	<input type="button" id="btn" value="urlencode">
@@ -21,6 +24,7 @@
 		解码： <input type="button" id="deBtn" value="urldecode">
 		<textarea style="display: block" id="outputDecode"></textarea>
 	</div>
+
 	<!--<img src="data:text/javascript;charset=gbk,window.a='%D6%D0%CE%C4'" id="d">-->
 	<!--<script charset="gbk" src="data:text/javascript;charset=gbk,alert('%CE%C4')"></script>-->
 	<script>
@@ -175,4 +179,45 @@
 		}
 	</script>
 
-</body></html>
+
+	<div style="margin-top:50px;">
+		<h2>js GBK编码插件</h2>
+		<textarea id="textarea" style="display:blcok; width:300px;height:50px;">测试中文</textarea>
+		<br>
+		<button id="encodeGBK">encodeGBK</button>
+		<button id="decodeGBK">decodeGBK</button>
+	</div>
+	<script type="text/javascript" src="../plugin/encodeGBK.js"></script>
+	<script type="text/javascript">
+			var encodeGBK = document.getElementById('encodeGBK');
+			var decodeGBK = document.getElementById('decodeGBK');
+			var textarea = document.getElementById('textarea');
+			encodeGBK.onclick = function(){
+				textarea.value = $URL.encode(textarea.value);
+			}
+			decodeGBK.onclick = function(){
+				textarea.value = $URL.decode(textarea.value);
+			}
+
+			 
+		function getGBKEscape(s) { 
+			var iframe=document.createElement("iframe");  
+			iframe.src="about:blank";  
+			iframe.setAttribute("style","display:none;visibility:hidden;");  
+			document.body.appendChild(iframe);  
+			var d=iframe.contentWindow.document;  
+			d.charset=d.characterSet="GBK";
+			alert(d.charset);
+
+		    d.write("<body><a href='?"+s+"'>X</a></body>");  
+		    d.close();  
+		    var url=d.body.firstChild.href;  
+		    return url.substr(url.lastIndexOf("?")+1);  
+		}
+		var aa = getGBKEscape('上海');
+		alert(aa);
+	</script>
+
+</body>
+
+</html>
