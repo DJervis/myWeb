@@ -9,6 +9,10 @@
 </head>
 
 <body>
+
+<!--[if IE]>
+	ie！！！
+<![endif]-->
 	<input type="text" id="input" value="中文">
 	<input type="button" id="btn" value="urlencode">
 	<select id="charset">
@@ -171,6 +175,10 @@
 			urlencode(document.getElementById('input').value, document.getElementById('charset').value, function(str) {
 				document.getElementById('output').value = str;
 			})
+			setTimeout(function(){
+				alert(document.getElementById('output').value);
+			},0);
+			
 		}
 		document.getElementById('deBtn').onclick = function() {
 			urldecode(document.getElementById('output').value, document.getElementById('charset').value, function(str) {
@@ -199,7 +207,7 @@
 				textarea.value = $URL.decode(textarea.value);
 			}
 
-			 
+		/*	 
 		function getGBKEscape(s) { 
 			var iframe=document.createElement("iframe");  
 			iframe.src="about:blank";  
@@ -207,7 +215,7 @@
 			document.body.appendChild(iframe);  
 			var d=iframe.contentWindow.document;  
 			d.charset=d.characterSet="GBK";
-			alert(d.charset);
+			//alert(d.charset);
 
 		    d.write("<body><a href='?"+s+"'>X</a></body>");  
 		    d.close();  
@@ -215,7 +223,8 @@
 		    return url.substr(url.lastIndexOf("?")+1);  
 		}
 		var aa = getGBKEscape('上海');
-		alert(aa);
+		//alert(aa);
+		*/
 	</script>
 
 </body>

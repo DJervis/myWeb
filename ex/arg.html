@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js 多态 arguments</title>
+</head>
+<body>
+<style type="text/css">
+ul, li {list-style: none;}
+li {display: inline-block;float:left;width: 50px;height: 30px;background: #ddd;}
+a {display: block;background: #f00;}
+</style>
+<div id="div"></div>
+<ul>
+	<li><a style="position:relative;">aaaa</a></li>
+	<li><a>bbbb</a></li>
+	<li><a>cccc</a></li>
+	<li><a>dddd</a></li>
+</ul>
+
+<script type="text/javascript">
+var div = document.getElementById("div");
+	function argTest (string, a, callback) {
+		var argLen = arguments.length;
+		for(var i=0; i<argLen-2; i++){
+			div.innerHTML += arguments[i];
+		}
+		callback = function(){
+			alert('b');
+		}
+	}
+	argTest('test1', 'test2', 'test3', 'test4');
+</script>
+</body>
+</html>
