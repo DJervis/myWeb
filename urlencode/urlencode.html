@@ -174,11 +174,7 @@
 		document.getElementById('btn').onclick = function() {
 			urlencode(document.getElementById('input').value, document.getElementById('charset').value, function(str) {
 				document.getElementById('output').value = str;
-			})
-			setTimeout(function(){
-				alert(document.getElementById('output').value);
-			},0);
-			
+			})			
 		}
 		document.getElementById('deBtn').onclick = function() {
 			urldecode(document.getElementById('output').value, document.getElementById('charset').value, function(str) {

@@ -145,6 +145,50 @@ h2.title {
 	top: 130px;
 	right: 0;
 }
+
+.nav li:hover .listex{
+	display: block;
+}
+.listex{
+	display: none;
+	position: relative;
+	left: 150px;
+	top: -55px;
+	z-index: 1;
+	border: 1px solid #dbdbdb;
+	border-radius: 3px;
+	box-shadow: 0 0 10px #444;
+	font-size: 16px;
+	width: 150px;
+}
+.listex .arrow{
+	z-index:1;
+	top: 28px;
+	left: -10px;
+	position: absolute;
+	width:0;
+	height:0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 10px solid #dbdbdb;
+}
+.listex .arrow .arrow_i{
+	width:0;
+	height:0;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-right: 9px solid #fff;
+	position:absolute;
+	right:-10px;
+	top:-7px;
+}
+.listex li, .listex li a{
+	height: 35px;
+	width: 100%;
+	background: #fff;
+	margin: 0;
+	border-radius: 0;
+}
 /* footer */
 footer{
 	width: 100%;
