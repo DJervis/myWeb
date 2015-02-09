@@ -56,6 +56,8 @@ ul{width: 800px;padding: 0;}
 </head>
 <body>
 
+<input type="button" value="<" id="bn_preMonth" style="width: 30px; height: 23px; cursor: pointer; border: 0px; background-color: rgb(255, 255, 255);">
+
 <div class="mmClock">
 	<span id="mmSecond"></span>
 	<a id="clockMM_a" href="">
@@ -243,6 +245,19 @@ var fnShowClock = function() {
         setTimeout(fnShowClock, 1e3);
     };
     fnShowClock();
+//页面刷新 滚动到之前位置
+window.onbeforeunload=function(){ 
+  var scrollPos; 
+  scrollPos=document.documentElement.scrollTop||document.body.scrollTop;
+  document.cookie="scrollTop="+scrollPos; 
+}
+window.onload=function(){ 
+  if(document.cookie.match(/scrollTop=([^;]+)(;|$)/) != null){ 
+    var arr=document.cookie.match(/scrollTop=([^;]+)(;|$)/); 
+    document.documentElement.scrollTop = parseInt(arr[1]); 
+    document.body.scrollTop = parseInt(arr[1]); 
+  } 
+} 
  </script>
 </body>
 </html>
