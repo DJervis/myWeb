@@ -118,3 +118,29 @@ function stopPropagation(e) {
         e.cancelBubble = true; //IE阻止冒泡方法
     }
 }
+//拖拽
+var dragMenuDisabled = false;
+function dragMenu(menuObj, e, op) {
+    e = e ? e : window.event;
+    if(op == 1) {
+        if(dragMenuDisabled || in_array(e.target ? e.target.tagName : e.srcElement.tagName, ['TEXTAREA', 'INPUT', 'BUTTON', 'SELECT'])) {
+            return;
+        }
+        JSMENU['drag'] = [e.clientX, e.clientY];
+        JSMENU['drag'][2] = parseInt(menuObj.style.left);
+        JSMENU['drag'][3] = parseInt(menuObj.style.top);
+        document.onmousemove = function(e) {try{dragMenu(menuObj, e, 2);}catch(err){}};
+        document.onmouseup = function(e) {try{dragMenu(menuObj, e, 3);}catch(err){}};
+        doane(e);
+    }else if(op == 2 && JSMENU['drag'][0]) {
+        var menudragnow = [e.clientX, e.clientY];
+        menuObj.style.left = (JSMENU['drag'][2] + menudragnow[0] - JSMENU['drag'][0]) + 'px';
+        menuObj.style.top = (JSMENU['drag'][3] + menudragnow[1] - JSMENU['drag'][1]) + 'px';
+        menuObj.removeAttribute('top_');menuObj.removeAttribute('left_');
+        doane(e);
+    }else if(op == 3) {
+        JSMENU['drag'] = [];
+        document.onmousemove = null;
+        document.onmouseup = null;
+    }
+}
