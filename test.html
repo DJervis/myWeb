@@ -52,6 +52,15 @@ ul{width: 800px;padding: 0;}
 .ti {width: 180px; height:30px; background:#eee;display: inline-block;text-align: -webkit-match-parent;}
 .li li {height:30px;}
 .li{display: none;}
+
+.ttxt{
+	display: inline-block;
+	max-width: 50px;
+	text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    border: 1px solid #eee;
+}
 </style>
 </head>
 <body>
@@ -72,6 +81,7 @@ ul{width: 800px;padding: 0;}
 	$('#edit').
 </script>
 
+<div style="display:inline-block;border:1px solid #ddd;"><span>aaa</span><span class="ttxt">jfdklafjdkslafjdkaslfjsdklafjksdlaf</span><span>bbb</span></div>
 <div style="transform:translate3d(0,0,0) scale(1);">
 	<ul>
 		<li class="ti">aaa
