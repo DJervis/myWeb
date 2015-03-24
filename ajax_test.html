@@ -1,1 +1,33 @@
-ajax test!!!!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ajax test</title>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<body>
+<div class="con">
+	
+</div>
+<script type="text/javascript">
+/*var json = { 
+"data":[
+	{"name": "xx", "value": "123", "title": "ajax"}, 
+	{"name": "bb", "value": "333", "title": "ajaxfds"}
+],
+"dataxx":[
+	{"name": "xx", "value": "123", "title": "ajax"}, 
+	{"name": "bb", "value": "333", "title": "ajaxfds"}
+]};
+var str = {"name": "bb", "value": "333", "title": "ajaxfds"};
+console.log(json.data[0].name);
+console.log(str);*/
+var div = $('.con');
+var getjson = $.getJSON("json.json", function(json){
+	for(var i=0; i<json.data.length; i++){
+		div.append(json.data[i].name+','+json.data[i].value+','+json.data[i].title+'<br>');
+	}
+});
+</script>
+</body>
+</html>
