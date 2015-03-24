@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>pt px em rem</title>
+<style type="text/css">
+html{font-size: 62.5%;}
+body {font: 1.2rem/1.5 Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;color:#333;}
+h1 {font-size: 2.4rem;}
+.desc {font-size: 1.4rem;}
+    .pt{font-size: 75pt;}
+    .px{font-size: 100px;}
+    .em{font-size: 10em;}
+    .rem{font-size: 10rem;}
+    .fonts p {display: inline-block; margin: 0;padding-right: 20px;}
+</style>
+</head>
+<body>
+    <h1>pt px em rem 的区别</h1>
+    <div class="desc">
+        <p>浏览器默认字体为16px，即100%=16px，所以设置body的font-size="62.5%"; 则1em=10px，1rem=16px<br>
+            em相对于当前对象内文本的字体尺寸（父级元素），rem相对于HTML根元素。<br>
+            设置html的font-size="62.5%";则1em=1rem=10px;
+        </p>
+    </div>
+    <div class="fonts">
+        <p class="pt">pt</p>
+        <p class="px">px</p>
+        <p class="em">em
+            <a href="#" style="font-size:2em;text-decoration:none;">2em</a>
+        </p>
+        <p class="rem">rem
+            <a href="#" style="font-size:2rem;text-decoration:none;">2rem</a>
+        </p>
+    </div>
+</body>
+</html>

@@ -85,6 +85,17 @@
 			}
 		});
 	}
+	var getEx = function() {
+		var exlist = $('.ex_list');
+		$.get('php/ex.php', function(data){
+			var exs = eval(data);
+			for(var i=0; i<exs.length; i++){
+				var item = '<li><a href="ex/'+exs[i]+'">'+exs[i]+'</a></li>';
+				exlist.append(item);
+			}
+		});
+	}
+	getEx();
 $(function(){
 	//getImg();
 	var wp = $('.play_wp'),
