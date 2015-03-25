@@ -2,49 +2,15 @@
 body{background: url(../images/bg.jpg) repeat;}
 a {color: #37a;}
 .wrapper {
-	width: 1140px;
+	width: 1120px;
 	margin: 0 auto;
 }
 /* header */
-header {
-	width: 180px;
-	font-size: 18px;
-	padding-top: 40px;
-}
-.wel{height:185px;}
-.nav li{
-	width: 169px;
-	height: 44px;
-	background: url(../images/dh_2.png) no-repeat;
-}
-.nav li a{
-	display: block;	
-	width: 134px;
-	height: 34px;
-	line-height: 34px;
-	text-align: center;
-	color: #544c41;
-	margin: 0 8px;
-	border-radius: 17px;
-}
-.nav li a:hover{
-	text-decoration: none;
-	color:#fff;
-	background: rgba(0,0,0,0.3);
-	-webkit-animation: menuAc 0.4s ease-in-out;
-}
-@-webkit-keyframes menuAc {
-	from{
-		color: #544c41;
-		background: rgba(0,0,0,0);
-	}
-	to{
-		color: #fff;
-		background: rgba(0,0,0,0.3);
-	}
+.nav-bar {
+	
 }
 /* main */
-.main{width: 960px;}
+.main{width: 100%;}
 h2.title {
 	height: 35px;
 	line-height: 35px;
