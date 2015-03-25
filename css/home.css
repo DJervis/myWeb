@@ -2,15 +2,44 @@
 body{background: url(../images/bg.jpg) repeat;}
 a {color: #37a;}
 .wrapper {
-	width: 1120px;
+	width: 1080px;
 	margin: 0 auto;
 }
 /* header */
+.logo {
+	display: inline-block;
+}
+.logo a, .logo img {
+	display: block;
+}
 .nav-bar {
-	
+	width: 500px;
+	padding-top: 35px;
+}
+.nav-con {
+	height: 34px;
+	background: url(../images/navbg.png) repeat-x;
+	border-radius: 17px;
+	padding: 0 17px;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+.nav-con a {
+	display: inline-block;
+	height: 34px;
+	line-height: 34px;
+	font-size: 14px;
+	padding: 0 10px;
 }
 /* main */
 .main{width: 100%;}
+.wp_left {
+	width: 700px;
+	float: left;
+}
+.wp_right {
+	width: 330px;
+	float: right;
+}
 h2.title {
 	height: 35px;
 	line-height: 35px;
@@ -20,10 +49,10 @@ h2.title {
 	font-size: 24px;
 }
 .imgPlay{
-	display: inline-block;
 	width: 600px;
 	height: 337px;
 	border: 5px solid #fff;
+	margin: 0 auto;
 	margin-bottom: 30px;
 	background: #ddd;
 	position: relative;
@@ -49,7 +78,7 @@ h2.title {
 .mmClock:before, .mmClock:after {
 	bottom: 10px;
 }
-.mmwp {display: inline-block; margin: 0 0 15px 15px;}
+.mmwp {display: inline-block;}
 .mmClock{
 	display: inline-block;
 	width: 320px;
@@ -57,9 +86,6 @@ h2.title {
 	background: #eee;
 	border: 5px solid #fff;
 	position: relative;
-}
-.imgPlay, .mmClock {
-	vertical-align: top;
 }
 .mmSec {
 	width: 50px;
@@ -98,18 +124,22 @@ h2.title {
 }
 .prevBtn, .nextBtn {
 	display: block;
-	width: 40px;
-	height: 40px;
+	width: 50px;
+	height: 100px;
 	background: #fff;
 	position: absolute;
 }
 .prevBtn {
-	top: 130px;
-	left: 0;
+	top: 120px;
+	left: -50px;
+	border-top-left-radius: 50px;
+	border-bottom-left-radius: 50px;
 }
 .nextBtn {
-	top: 130px;
-	right: 0;
+	top: 120px;
+	right: -50px;
+	border-top-right-radius: 50px;
+	border-bottom-right-radius: 50px;
 }
 
 .nav li:hover .listex{
