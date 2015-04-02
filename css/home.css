@@ -52,7 +52,7 @@ h2.title {
 .imgPlay{
 	width: 600px;
 	height: 337px;
-	border: 5px solid #fff;
+	border: 5px solid #efefef;
 	margin: 0 auto;
 	margin-bottom: 30px;
 	background: #ddd;
@@ -85,7 +85,7 @@ h2.title {
 	width: 320px;
 	height: 213px;
 	background: #eee;
-	border: 5px solid #fff;
+	border: 5px solid #efefef;
 	position: relative;
 }
 .mmSec {

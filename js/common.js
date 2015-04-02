@@ -119,6 +119,52 @@ function stopPropagation(e) {
     }
 }
 //拖拽
+function in_array(needle, haystack) {
+    if(typeof needle == 'string' || typeof needle == 'number') {
+        for(var i in haystack) {
+            if(haystack[i] == needle) {
+                    return true;
+            }
+        }
+    }
+    return false;
+}
+function isUndefined(variable) {
+    return typeof variable == 'undefined' ? true : false;
+}
+function doane(event, preventDefault, stopPropagation) {
+    var preventDefault = isUndefined(preventDefault) ? 1 : preventDefault;
+    var stopPropagation = isUndefined(stopPropagation) ? 1 : stopPropagation;
+    e = event ? event : window.event;
+    if(!e) {
+        e = getEvent();
+    }
+    if(!e) {
+        return null;
+    }
+    if(preventDefault) {
+        if(e.preventDefault) {
+            e.preventDefault();
+        } else {
+            e.returnValue = false;
+        }
+    }
+    if(stopPropagation) {
+        if(e.stopPropagation) {
+            e.stopPropagation();
+        } else {
+            e.cancelBubble = true;
+        }
+    }
+    return e;
+}
+var JSMENU = [];
+JSMENU['active'] = [];
+JSMENU['timer'] = [];
+JSMENU['drag'] = [];
+JSMENU['layer'] = 0;
+JSMENU['zIndex'] = {'win':200,'menu':300,'dialog':400,'prompt':500};
+JSMENU['float'] = '';
 var dragMenuDisabled = false;
 function dragMenu(menuObj, e, op) {
     e = e ? e : window.event;
@@ -143,4 +189,29 @@ function dragMenu(menuObj, e, op) {
         document.onmousemove = null;
         document.onmouseup = null;
     }
+}
+// alert 自定义
+function _alert(data){
+    var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+    var clientWidth = document.documentElement.clientWidth || document.body.clientWidth;
+    var aDiv = document.createElement('div');
+    var btns = document.createElement('button');
+    aDiv.id = "myAlert";
+    aDiv.className = "myAlert";
+    aDiv.innerHTML = "<div class='con'>"+data+"</div>";
+
+
+    btns.innerText = "确定";    
+    btns.onclick = function(){
+        this.parentNode.parentNode.removeChild(this.parentNode);
+    }
+    aDiv.appendChild(btns);
+    document.body.appendChild(aDiv);
+    css(aDiv, {
+        'top': (clientHeight-aDiv.offsetHeight)/2+'px', 
+        'left': (clientWidth-aDiv.offsetWidth)/2+'px'
+    });
+    aDiv.onmousedown = function(){
+        dragMenu(aDiv, event, 1);
+    }    
 }

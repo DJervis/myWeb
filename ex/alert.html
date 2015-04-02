@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>alert 自定义</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <script type="text/javascript" src="../js/common.js"></script>
+</head>
+<body>
+<div class="container">
+    <button id="abtn">my alert</button>
+    <button class="sys" onclick="alert('浏览器alert');">alert</button>
+</div>
+<script type="text/javascript">
+$('abtn').onclick = function(){
+    _alert('alert 自定义 测试！');
+}
+</script>
+</body>
+</html>
