@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>title tips</title>
+
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+<style type="text/css">
+    .container {margin-top: 100px;}
+    .container a {display: inline-block; padding: 5px 10px; border:1px solid #999;}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <a href="javascript:;" title-tip="小tip测试-嘿嘿">嘿嘿</a>
+    <a href="javascript:;" title-tip="haha">哈哈</a>
+    <a href="javascript:;" title-tip="小tip测试-呵呵" class="tip_down">呵呵</a>
+</div>
+
+<script type="text/javascript">
+function showTips(){
+    function showTip(obj){
+        var style = "position:absolute;padding:5px 10px;font-size:12px;line-height:1.5;color:#fff;border-radius:3px;background:#444;background:rgba(0,0,0,0.7);";
+        var style_arrow = "left: 10px;position: absolute;width: 0;height: 0;border-left: 6px solid transparent;border-right: 6px solid transparent;";
+        var tipDiv = $('#tipDiv')[0];        
+        var tip_con = obj.attr('title-tip');
+        var obj_top = obj.offset().top;
+        var obj_left = obj.offset().left;
+        var obj_height = obj.outerHeight();
+        //console.log(obj_height);
+        if(tipDiv){
+            tipDiv.style.display = "block";
+            var arrow = tipDiv.firstChild;
+        }else{
+            tipDiv = document.createElement('div');
+            var arrow = document.createElement('div');
+            var span = document.createElement('span');            
+            tipDiv.id = "tipDiv";
+            tipDiv.appendChild(arrow);
+            tipDiv.appendChild(span);
+            document.body.appendChild(tipDiv);
+        }
+        if(obj.hasClass('tip_down')){
+            arrow.style.cssText = style_arrow + "top: -6px;border-bottom: 6px solid #444;border-bottom: 6px solid rgba(0,0,0,0.7);";
+            tipDiv.style.cssText = style + 'top:'+parseInt(obj_top+obj_height+8)+'px;'+'left:'+obj_left+'px;';
+        }else{
+            arrow.style.cssText = style_arrow + "bottom: -6px;border-top: 6px solid #444;border-top: 6px solid rgba(0,0,0,0.7);";
+            tipDiv.style.cssText = style + 'top:'+(obj_top-38)+'px;'+'left:'+obj_left+'px;';
+        }
+        //console.log(tipDiv.innerText);
+        if(tipDiv.innerText == undefined){ //firefox
+            tipDiv.lastChild.textContent = tip_con;
+        }else{
+            tipDiv.lastChild.innerText = tip_con;
+        }
+    }
+    function hideTip(){
+        var tipDiv = $('#tipDiv');
+        if(tipDiv.length){
+            tipDiv.hide();
+        }
+    }
+    var otips = $('[title-tip]');
+    otips.hover(function() {
+        showTip($(this));        
+    }, function() {
+        hideTip();
+    });
+}
+showTips();
+</script>
+</body>
+</html>
