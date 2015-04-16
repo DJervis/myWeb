@@ -36,16 +36,27 @@
 	<textarea style="width:300px; height:100px;" placeholder="textarea"></textarea>
 <h2>calendar</h2>
 	<input id="calen" type="text" >
+	<input id="checkin" type="text" >
+	<input id="checkout" type="text" >
 	<script type="text/javascript">
-		var calen = document.getElementById('calen');
+		var calen = document.getElementById('calen'),
+		checkin = document.getElementById('checkin'),
+		checkout = document.getElementById('checkout');
 		calen.onfocus = function(){
+			JTC.setday();
+		}
+		checkin.onfocus = function(){
+			JTC.setday();
+		}
+		checkout.onfocus = function(){
 			JTC.setday();
 		}
 	</script>
 	<script type="text/javascript" src="../js/myCalendar.js"></script>
+	<script type="text/javascript" src="../js/date.js"></script>
 <h2>png 半透明</h2>
 	<div class="icons">png8<a href="#" class="icon png8"></a></div>
 	<div class="icons">png24<a href="#" class="icon png24"></a></div>
-	
+
 </body>
 </html>
