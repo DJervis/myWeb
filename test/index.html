@@ -25,9 +25,20 @@
 	-khtml-opacity: 1;
 	opacity: 1;
 }
-.icons .png8 {background: url(../images/widearea-fu.png) no-repeat;}
-.icons .png24 {background: url(../images/widearea.png) no-repeat;}
+.icons .png8 {
+	background-image: url(../images/widearea-fu.png) no-repeat;
+}
+.icons .png24 {
+	background-image: url(../images/widearea.png) no-repeat;	
+}
 
+.icons {color: #37a;}
+.icon-color {
+	display: inline-block;
+	width: 16px;
+	height: 17px;
+	background-color: currentColor;
+}
 </style>
 </head>
 <body>
@@ -57,6 +68,7 @@
 <h2>png 半透明</h2>
 	<div class="icons">png8<a href="#" class="icon png8"></a></div>
 	<div class="icons">png24<a href="#" class="icon png24"></a></div>
+	<div class="icons"><i class="icon-color png24"></i><a href="#">icon-color</a></div>
 
 </body>
 </html>
