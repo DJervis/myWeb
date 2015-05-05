@@ -215,3 +215,164 @@ function _alert(data){
         dragMenu(aDiv, event, 1);
     }    
 }
+
+//分享相关
+function sharetoqqzone(turl, fid){
+    var zoneurl='http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?';
+    //var domTitle=document.getElementsByTagName('title')[0],domTitleTy=$C('ts')[0].getElementsByTagName('a')[0],domSumm=$('postmessage_'+fid);
+    var domTitle=null, domSumm=null;
+    var title="十六番分享";
+    var summary="十六番约伴，直播"
+    if(domTitle && domTitle.innerText!=''){
+        title=domTitle.innerText;
+        if(domTitleTy && domTitleTy.innerText!=''){
+            title=domTitleTy.innerText+title;
+        }
+    }
+    if(domSumm && domSumm.innerText!=''){
+        summary=domSumm.innerText.slice(0,80);
+    }
+    if(turl == ""){
+        turl = location.href;
+    }
+    var p = {
+        url: turl,
+        showcount:'0',
+        desc:'',
+        summary:summary,
+        title:title,
+        site:'十六番',
+        pics:'',
+        style:'201',
+        width:113,
+        height:39
+    };
+    var s = [];
+    for(var i in p){
+        s.push(i + '=' + encodeURIComponent(p[i]||''));
+    }
+    aw=window.open();
+    aw.location.href=zoneurl+s.join('&')
+
+}
+
+function sharetoweibo(turl,fid,key){
+    var weibourl="http://v.t.sina.com.cn/share/share.php?";
+    var domTitle=document.getElementsByTagName('title')[0],
+        domTitleTy=$('#live_con_'+fid).find('a')[0],
+        domfImgs=$('#live_con_'+fid)[0].getElementsByTagName('img');
+    // var domTitle=null, domSumm=null, domfImgs=null;
+    var title="十六番分享";
+    var summary="十六番约伴，直播";
+    var picUrl='';
+    if(domTitle && domTitle.innerText!=''){
+        if(domTitle.innerText.indexOf('直播')){
+            title="-十六番直播";
+        }else if(domTitle.innerText.indexOf('约伴')){
+            title = "-十六番约伴";
+        }
+        if(domTitleTy && domTitleTy.innerText!=''){
+            title=domTitleTy.innerText+title;
+        }
+    }
+    if(domfImgs && domfImgs.length>=1){
+        for (var i=0;i<domfImgs.length;i++){
+            if(domfImgs[i].getAttribute('aid')!=''){
+                picUrl=domfImgs[i].getAttribute('zoomfile');
+                break;
+            }
+        }
+    }
+    if(turl == ""){
+        turl = location.href;
+    }
+    console.log(picUrl);
+    var p = {
+        url: turl,
+        title:title,
+        pic:picUrl,
+        searchPic:true,
+        appkey:key
+    };
+    var s = [];
+    for(var i in p){
+        s.push(i + '=' + encodeURIComponent(p[i]||''));
+    }
+    aw=window.open();
+    aw.location.href=weibourl+s.join('&')
+}
+
+function copylink(turl){
+    var url="";
+    if(turl){
+        url=turl;
+    }else{
+        url=window.location.href;
+    }
+    _setCopy(url,'复制成功')
+}
+
+function _setCopy(text,msg){
+    var copyTip = '<div class="copy-tip">'+msg+'</div>';
+    var setTip = function(){
+        var tip = $('.copy-tip');   
+        tip.css({
+            top: parseInt($(document).scrollTop()+($(window).height()-tip.height())/2) + "px",
+            left: ($(window).width()-tip.width())/2 + "px"
+        });
+    };
+    var tipHide = function(){
+        setTimeout(function(){
+            $('.copy-tip').fadeOut('3000', function() {
+                $(this).remove();
+            });
+        }, 1000);
+    };
+    if(window.clipboardData) { //ie
+        var r = clipboardData.setData('Text', text);
+        if(r) {
+            if(msg) {
+                $('body').append(copyTip);
+                setTip();
+                tipHide();
+            }
+        } else {
+            _dialog({title:'提示', closeType: 0, msg:'<div class="c"><div style="text-align: center;">复制失败，请选择“允许访问”</div></div>'});
+        }
+    } else { //非ie
+        var msgcp = '<div class="zclip-copy" style="text-align: center; text-decoration:underline;">点此复制到剪贴板</div>';
+        _dialog({title: '提示', closeType: 0, msg: msgcp});
+        if (typeof(swfUrl) == "undefined" || swfUrl == "") {
+            swfUrl = "../common/swf/ZeroClipboard.swf";
+        };
+        $('.zclip-copy').zclip({
+            path: swfUrl,
+            copy: function(){
+                return text;
+            },
+            afterCopy: function(){
+                $('.closeDia').click();
+                $('body').append(copyTip);
+                setTip();
+                tipHide();
+            }
+        });
+    }
+}
+
+function cmakeCode (turl) {
+    var url="";
+    if(turl){
+        url=turl;
+    }else{
+        url=window.location.href;
+    }
+    var msg = '<div class="qarea" align="center"><div class="qarea_t">使用微信扫一扫，扫描后点击右上角图标分享</div><div id="qaream" class="qarea_c" style="margin:20px auto;height:100px;width:100px;"></div></div>';
+    _dialog({title:'微信分享', closeType: 0, msg:msg});
+    var qarea=$('#qaream')[0];
+    var qrcode = new QRCode(qarea, {
+        width : 100,
+        height : 100
+    });
+    qrcode.makeCode(url);
+}
