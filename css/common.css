@@ -1,11 +1,11 @@
 .fl {float: left;}
 .fr {float: right;}
-.clearfix {
+.cl {
 	display: block;
 	overflow: hidden;
 	zoom: 1;
 }
-.clearfix:after {
+.cl:after {
 	content: ".";
 	display: block;	
 	clear: both;
@@ -15,6 +15,7 @@
 }
 .pr {position: relative;}
 .pa {position: absolute;}
+.pf {position: fixed;}
 
 .bdt {border-top: 1px solid #dfdfdf;}
 .bdb {border-bottom: 1px solid #dfdfdf;}

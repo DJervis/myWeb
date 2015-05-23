@@ -1,9 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8">	
+	<meta name="apple-touch-fullscreen" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<meta content="fullscreen=yes,preventMove=no" name="ML-Config">
 	<title>test</title>
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+
 <style type="text/css">
 #editorbody {width: 300px;height:100px;border: 1px solid #999;padding: 10px;}
 .icons .icon{
@@ -40,9 +47,29 @@
 	height: 17px;
 	background-color: currentColor;
 }
+
+.ie7-hover {display: block; width: 100px; background: #eee; text-align: center; position: relative;}
+.hover-show {display:none;width: 50px;position: absolute; top: 18px; left: 0;padding-top: 20px; border: 1px solid #dedede;}
+.ie7-hover:hover .hover-show {display: block;}
 </style>
 </head>
 <body>
+<h2>jQ slideDown</h2>
+	<button class="slide-btn">slide</button>
+	<div class="slide" style="width:200px; height:200px;background:red;color:#fff;">
+		fkdlsakfl;dkfla;dskfl;<br>
+		fkdlsakfl;dkfla;dskfl;
+	</div>
+	<script type="text/javascript">
+	var slide = $('.slide');
+	$('.slide-btn').click(function() {
+		if(slide.css('display') == "none"){
+			slide.slideDown('500');
+		}else{
+			slide.slideUp('500');
+		}
+	});
+	</script>
 <h2>text</h2>
 	<div class="wrap" id="editorbody" contenteditable="true" spellcheck="false"></div>
 	<textarea style="width:300px; height:100px;" placeholder="textarea"></textarea>
@@ -72,5 +99,54 @@
 	<div class="icons"><i class="icon-color png24"></i><a href="#">icon-color</a></div>
 <h2>打开app</h2>
 	<a href="weixin://">open weixin</a>
+<h2>ie7 hover</h2>
+	<p style="color:#999;">ie7下 透明背景无法触发hover (js mouseover代替hover)</p>
+	<a class="ie7-hover" href="javascript:;">
+		ie7-hover
+		<div id="hover" class="hover-show">hover-show</div>
+	</a>
+	<div class="wrap">
+		<ul class="arrow">
+			<li class="item"><a href="" class="cal">xxxxxx</a></li>
+			<li class="item"><a href="" class="cal">xxxxxx</a></li>
+			<li class="item"><a href="" class="cal">xxxxxx</a></li>
+			<li class="item"><a href="" class="cal">xxxxxx</a></li>
+			<li class="item"><a href="" class="cal">xxxxxx</a></li>
+		</ul>
+	</div>
+	<script type="text/javascript">		
+		/*document.getElementById('hover').onmouseover = function(){
+			alert('hover');
+			this.style.display = "block";
+		}*/
+		!function(){
+			// alert('aaaaaa');
+			$('.wrap').find('.arrow').css({
+				width: '100px',
+				height: '100px'
+			}).find('.item').css('background', '#eee').find('.cal').css('color', 'red');
+		}();		
+	</script>
+<h2>css优先级</h2>
+	<style>
+		.wrap .css {color: #fff;background: url(../images/123.jpg) no-repeat;}
+		.leve {display: block; padding: 5px; background-position: 0 -80px;}
+	</style>
+	<div class="wrap">
+		<div class="css leve">css优先级</div>
+	</div>
+<h2>手机浏览器隐藏地址栏</h2>
+	<script>
+		window.onload=function(){ 
+			if(document.documentElement.scrollHeight <= document.documentElement.clientHeight) { 
+				bodyTag = document.getElementsByTagName('body')[0]; 
+				bodyTag.style.height = document.documentElement.clientWidth / screen.width * screen.height + 'px'; 
+				alert(bodyTag.style.height);
+			}
+			setTimeout(function() { 
+				window.scrollTo(0, 1) 
+			}, 0); 
+		}; 
+	</script>
 </body>
 </html>
