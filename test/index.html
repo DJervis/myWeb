@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-	<meta charset="UTF-8">	
-	<meta name="apple-touch-fullscreen" content="yes">
-	<meta name="mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 	<meta content="fullscreen=yes,preventMove=no" name="ML-Config">
 	<title>test</title>
-	<script type="text/javascript" src="../js/jquery.min.js"></script>
+<!--<script type="text/javascript" src="../js/jqurey.min.js"></script>-->
+	<script type="text/javascript" src="../js/qmik.min.js"></script>
 
 <style type="text/css">
+body {padding-bottom: 200px;}
 #editorbody {width: 300px;height:100px;border: 1px solid #999;padding: 10px;}
 .icons .icon{
 	height: 16px;
@@ -54,7 +52,8 @@
 </style>
 </head>
 <body>
-<h2>jQ slideDown</h2>
+<div class="www">
+<h2>1. jQ slideDown</h2>
 	<button class="slide-btn">slide</button>
 	<div class="slide" style="width:200px; height:200px;background:red;color:#fff;">
 		fkdlsakfl;dkfla;dskfl;<br>
@@ -70,10 +69,10 @@
 		}
 	});
 	</script>
-<h2>text</h2>
+<h2>2. text</h2>
 	<div class="wrap" id="editorbody" contenteditable="true" spellcheck="false"></div>
 	<textarea style="width:300px; height:100px;" placeholder="textarea"></textarea>
-<h2>calendar</h2>
+<h2>3. calendar</h2>
 	<input id="calen" type="text" >
 	<input id="checkin" type="text" >
 	<input id="checkout" type="text" >
@@ -93,13 +92,13 @@
 	</script>
 	<script type="text/javascript" src="../js/myCalendar.js"></script>
 	<script type="text/javascript" src="../js/date.js"></script>
-<h2>png 半透明</h2>
+<h2>4. png 半透明</h2>
 	<div class="icons">png8<a href="#" class="icon png8"></a></div>
 	<div class="icons">png24<a href="#" class="icon png24"></a></div>
 	<div class="icons"><i class="icon-color png24"></i><a href="#">icon-color</a></div>
-<h2>打开app</h2>
+<h2>5. 打开app</h2>
 	<a href="weixin://">open weixin</a>
-<h2>ie7 hover</h2>
+<h2>6. ie7 hover</h2>
 	<p style="color:#999;">ie7下 透明背景无法触发hover (js mouseover代替hover)</p>
 	<a class="ie7-hover" href="javascript:;">
 		ie7-hover
@@ -127,7 +126,7 @@
 			}).find('.item').css('background', '#eee').find('.cal').css('color', 'red');
 		}();		
 	</script>
-<h2>css优先级</h2>
+<h2>7. css优先级</h2>
 	<style>
 		.wrap .css {color: #fff;background: url(../images/123.jpg) no-repeat;}
 		.leve {display: block; padding: 5px; background-position: 0 -80px;}
@@ -135,18 +134,47 @@
 	<div class="wrap">
 		<div class="css leve">css优先级</div>
 	</div>
-<h2>手机浏览器隐藏地址栏</h2>
+<h2>8. 手机浏览器隐藏地址栏</h2>
 	<script>
 		window.onload=function(){ 
 			if(document.documentElement.scrollHeight <= document.documentElement.clientHeight) { 
 				bodyTag = document.getElementsByTagName('body')[0]; 
 				bodyTag.style.height = document.documentElement.clientWidth / screen.width * screen.height + 'px'; 
-				alert(bodyTag.style.height);
+				// alert(bodyTag.style.height);
 			}
 			setTimeout(function() { 
 				window.scrollTo(0, 1) 
 			}, 0); 
 		}; 
 	</script>
+<h2>9. img 下空白</h2>
+	<style>
+		.wrap img {display: inline-block;width: 45px; height:30px; vertical-align: bottom; background: transparent;}		
+	</style>
+	<div class="wrap">
+		<img src="">
+	</div>
+<h2>10. tap边框</h2>
+	<style>
+		.tap-test a{display: block;padding: 10px;color:#333; -webkit-tap-highlight-color: rgba(61,166,226,0.3);}
+		.tap-test a:active {outline:none;}		
+	</style>
+	<div class="tap-test">
+		<a href="javascript:;" class="aa">click</a>
+		<a href="javascript:;" class="bb" onclick="alert('bbbb');">onclick</a>
+		<a href="javascript:;" class="cc" >touch</a>
+	</div>
+	<script>
+		$('.aa').on('click', function(){alert('test');});
+		$('.cc').on('touchend', function(){alert('cccc');});
+	</script>
+<h2>11. H5上传图片</h2>
+	<input id="uploadfile" type="file" name="img" multiple="multiple" accept="image/*">
+	<script>
+		$('#uploadfile').change(function(event) {
+			var file = event.target.files;
+		});
+	</script>
+</div>
 </body>
 </html>
