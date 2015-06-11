@@ -11,13 +11,14 @@ var JTC = (function() {
 		config = {
 			dayBgColor: ['#90E3F7', '#FFFFFF', '#FFDA44'], //鼠标移动的颜色
 			dayColor: ['#ccc', '#000000', '#888888'], //日期字体颜色:1. 上月和下月的日期; 2. 本月; 3. 不可选时
-			format: 'yyyy-MM-dd', //返回日期值的格式
+			format: 'yyyy-MM-dd hh:mm', //返回日期值的格式
 			outObject: null,
 			startDay: null,
 			minDate: 0, //日期范围最小值(yyyyMMdd) 0. 表示不设定
 			maxDate: 0, //日期范围最大值(yyyyMMdd) 0. 表示不设定
 			ranged: 1, //是否包含日期边界值: 0. 不包含; 1. 包含
 			showClear: true, //是否显示清空按钮
+			showHourminute: true, //是否显示时分
 			today: null,
 			bgDivID: 'JTC_BG_DIV',
 			dayPanelId: 'JTC_TheCurDay',
@@ -25,7 +26,9 @@ var JTC = (function() {
 			monthCell: 'JTC_TheCurMonth',
 			clearButtonId: 'JTC_ClearButton',
 			monthSelector: 'JTC_MonthSelector',
-			yearSelector: 'JTC_YearSelector'
+			yearSelector: 'JTC_YearSelector',
+			hourInput: 'JTC_HourInput',
+			minuteInput: 'JTC_MinuteInput'
 		},
 		lang = {
 			monthText: {
@@ -55,6 +58,14 @@ var JTC = (function() {
 			monthCell: {
 				zh: '单击选择月份',
 				en: 'Click to select the month'
+			},
+			hour: {
+				zh: "点",
+				en: "hour"
+			},
+			minute: {
+				zh: "分",
+				en: "minute"
 			}
 		},
 		trim = function(str) {
@@ -63,6 +74,32 @@ var JTC = (function() {
 		$ = function(id, doc) {
 			var doc = doc || document;
 			return doc.getElementById(id);
+		},
+		$C = function(classname, ele, tag) {
+			var returns = [];
+			ele = ele || document;
+			tag = tag || '*';
+			if(ele.getElementsByClassName) {
+				var eles = ele.getElementsByClassName(classname);
+				if(tag != '*') {
+					for (var i = 0, L = eles.length; i < L; i++) {
+						if (eles[i].tagName.toLowerCase() == tag.toLowerCase()) {
+								returns.push(eles[i]);
+						}
+					}
+				} else {
+					returns = eles;
+				}
+			}else {
+				eles = ele.getElementsByTagName(tag);
+				var pattern = new RegExp("(^|\\s)"+classname+"(\\s|$)");
+				for (i = 0, L = eles.length; i < L; i++) {
+						if (pattern.test(eles[i].className)) {
+								returns.push(eles[i]);
+						}
+				}
+			}
+			return returns;
 		},
 		$$ = function(name, doc) {
 			var doc = doc || document;
@@ -104,12 +141,23 @@ var JTC = (function() {
 				if (id) {
 					button.id = id;
 				}
-				util.setObjectStyle(button, style + 'cursor:pointer;border:0px;');
+				util.setObjectStyle(button, style + 'cursor:pointer;');
 				button.onclick = func;
 				return button;
 			},
+			createInput: function(text, style, func, id) {
+				var input = $$('input');
+				input.setAttribute('type', 'text');
+				input.value = text;
+				if (id) {
+					input.id = id;
+				}
+				util.setObjectStyle(input, style);
+				input.onkeyup = func;
+				return input;
+			},
 			copyConfig: function() {
-				var arg = ['format', 'outObject', 'minDate', 'maxDate', 'ranged', 'showClear', 'startDay'];
+				var arg = ['format', 'outObject', 'minDate', 'maxDate', 'ranged', 'showClear', 'startDay', 'showHourminute'];
 				var set = {};
 				for (var i = 0; i < arg.length; i++) {
 					set[arg[i]] = config[arg[i]];
@@ -117,19 +165,21 @@ var JTC = (function() {
 				config['set'] = set;
 				return config['set'];
 			},
-			formatDate: function(date, format) {
+			formatDate: function(date, format) {				
 				var lang = {
 					'M+': date.getMonth() + 1,
-					'd+': date.getDate()
+					'd+': date.getDate(),
+					'h+': date.getHours(),
+					'm+': date.getMinutes()
 				};
 				if (/(y+)/.test(format)) {
 					format = format.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
 				}
-				for (var key in lang) {
+				for (var key in lang) {					
 					if (new RegExp('(' + key + ')').test(format)) {
 						format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? lang[key] : ('00' + lang[key]).substr(('' + lang[key]).length));
 					}
-				}
+				}				
 				return format;
 			},
 			getCoords: function(ev) {
@@ -342,14 +392,16 @@ var JTC = (function() {
 				div.style.display = '';
 				events.addEvent(document, 'keydown', events.keyDown);
 				events.addEvent(document, 'mousedown', events.mouseDown);
-				$(config.clearButtonId).style.display = config['set'].showClear ? '' : 'none';
+				// $(config.clearButtonId).style.display = config['set'].showClear ? '' : 'none';
+				$(config.hourInput).style.display = config['set'].showHourminute ? '' : 'none';
+				$(config.hourInput).style.display = config['set'].showHourminute ? '' : 'none';
 			},
 			setHeaderYM: function(yy, mm) {
 				$(config.yearCell).innerHTML = yy;
 				$(config.monthCell).innerHTML = util.getLangText(lang.monthText)[mm - 1];
 				$(config.monthCell).axis = mm;
 			},
-			createDay: function(yy, mm, dd) {
+			createDay: function(yy, mm, dd, h, m) {
 				this.dayRangeEv = function(obj, nday, x) {
 					var isRange = util.checkDateRange(nday);
 					obj.axis = x;
@@ -418,8 +470,11 @@ var JTC = (function() {
 					month = ready.MM;
 				}
 				var date = new Date(year + '/' + month + '/' + day);
+				var hour = date.getHours();
+				var minute = date.getMinutes();
 				util.outObjectValue(date);
-				events.hideLayout();
+				events.createDay(year,month,day,hour,minute);
+				// events.hideLayout();
 			},
 			emptyFunc: function() {},
 			turnMonth: function(n) {
@@ -507,16 +562,16 @@ var JTC = (function() {
 				cell = row.insertCell(0);
 				cell.colSpan = 2;
 				var bnStyle = 'border:0px;background-color:#FFFFFF;width:24px;height:20px; margin:0px 0px;';
-				var button = util.createButton(' ←', bnStyle, function() {
+				var button = util.createButton('←', bnStyle, function() {
 					var s1 = start - 10;
 					events.yearSelector(table, s1, 1);
 				}, objid[0]);
 				cell.appendChild(button);
-				button = util.createButton(' ×', bnStyle, function() {
+				button = util.createButton('×', bnStyle, function() {
 					events.hideSelector(1);
 				});
 				cell.appendChild(button);
-				button = util.createButton(' →', bnStyle, function() {
+				button = util.createButton('→', bnStyle, function() {
 					var s2 = start + 10;
 					events.yearSelector(table, s2, 1);
 				}, objid[1]);
@@ -678,25 +733,67 @@ var JTC = (function() {
 				var table = util.createTable();
 				var row = table.insertRow(0);
 				var cell = row.insertCell(0);
+				var bnStyle = 'font-size:12px;width:30px;background-color:#FFFFFF;';
+
+				cell = row.insertCell(0);
 				cell.style.width = '48px';
-				var bnStyle = 'font-size:12px;width:38px; border:0px; background-color:#FFFFFF;';
-				cell = row.insertCell(1);
-				cell.style.width = '38px';
-				var bn = util.createButton(util.getLangText(lang.clearBn), bnStyle, function() {
-					util.outObjectValue('');
-				}, config.clearButtonId);
-				cell.appendChild(bn);
+				var bn = util.createInput("00", bnStyle, function() {
+					// alert(this.value);
+					var that = this;
+					var val = parseInt(that.value);
+					if(val<=0 || that.value==""){
+						that.value = "00";
+					}else if(val>24){
+						that.value = "23";
+					}else if(val>=10 && val<24){
+						that.value = val;						
+					}else if(val<10){
+						that.value = "0"+val;
+					}
+				}, config.hourInput);
+				cell.innerText = util.getLangText(lang.hour);
+				cell.insertBefore(bn, cell.firstChild);			
+				
+
 				cell = row.insertCell(2);
-				cell.style.width = '38px';
-				bn = util.createButton(util.getLangText(lang.todayBn), bnStyle, function() {
-					var xnow = util.getDateNumbers(util.today());
-					events.createDay(xnow.year, xnow.month, xnow.day);
+				cell.style.width = '48px';
+				bn = util.createInput("00", bnStyle, function() {
+					var that = this;
+					var val = parseInt(that.value);
+					if(val<=0 || that.value==""){
+						that.value = "00";
+					}else if(val>60){
+						that.value = "59";
+					}else if(val>=10 && val<60){
+						that.value = val;						
+					}else if(val<10){
+						that.value = "0"+val;
+					}
+				}, config.minuteInput);
+				cell.innerText = util.getLangText(lang.minute);
+				cell.insertBefore(bn, cell.firstChild);
+
+				cell = row.insertCell(3);
+				cell.style.width = '40px';
+				bnStyle = "font-size:12px;width:40px;background-color:#efefef;border:1px solid #444;margin-left:10px;"
+				bn = util.createButton('确定', bnStyle, function(){
+					var year = $(config.yearCell).innerText;
+					var month = $(config.monthCell).getAttribute('axis');
+					var day = $C('JTC_CHOOSEDAY')[0].innerText;
+					var hour = $(config.hourInput).value;
+					var minute = $(config.minuteInput).value;
+					// alert(year+'/'+month+'/'+day+' '+hour+':'+minute);
+					var date = new Date(year+'/'+month+'/'+day+' '+hour+':'+minute);
+					util.outObjectValue(date);
+					events.hideLayout();
 				});
 				cell.appendChild(bn);
-				cell = row.insertCell(3);
-				cell.style.width = '38px';
+
+				/*cell = row.insertCell(3);
+				cell.style.width = '40px';
 				bn = util.createButton(util.getLangText(lang.closeBn), bnStyle, events.hideLayout);
-				cell.appendChild(bn);
+				cell.appendChild(bn);*/
+
 				return table;
 			};
 			var container = util.createTable();

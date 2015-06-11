@@ -5,8 +5,8 @@
 	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 	<meta content="fullscreen=yes,preventMove=no" name="ML-Config">
 	<title>test</title>
-<!--<script type="text/javascript" src="../js/jqurey.min.js"></script>-->
-	<script type="text/javascript" src="../js/qmik.min.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<!--	<script type="text/javascript" src="../js/qmik.min.js"></script>-->
 
 <style type="text/css">
 body {padding-bottom: 200px;}
@@ -55,7 +55,7 @@ body {padding-bottom: 200px;}
 <div class="www">
 <h2>1. jQ slideDown</h2>
 	<button class="slide-btn">slide</button>
-	<div class="slide" style="width:200px; height:200px;background:red;color:#fff;">
+	<div class="slide" style="width:200px; height:200px;background:red;color:#fff;display:none;">
 		fkdlsakfl;dkfla;dskfl;<br>
 		fkdlsakfl;dkfla;dskfl;
 	</div>
@@ -90,7 +90,8 @@ body {padding-bottom: 200px;}
 			JTC.setday();
 		}
 	</script>
-	<script type="text/javascript" src="../js/myCalendar.js"></script>
+	<!-- myCalendar	 calendar  calendar_time -->
+	<script type="text/javascript" src="../js/calendar_time.js"></script>
 	<script type="text/javascript" src="../js/date.js"></script>
 <h2>4. png 半透明</h2>
 	<div class="icons">png8<a href="#" class="icon png8"></a></div>
@@ -156,23 +157,44 @@ body {padding-bottom: 200px;}
 	</div>
 <h2>10. tap边框</h2>
 	<style>
-		.tap-test a{display: block;padding: 10px;color:#333; -webkit-tap-highlight-color: rgba(61,166,226,0.3);}
+		.tap-test a{display: inline-block;padding: 10px;color:#333; -webkit-tap-highlight-color: rgba(61,166,226,0.3);}
 		.tap-test a:active {outline:none;}		
 	</style>
 	<div class="tap-test">
 		<a href="javascript:;" class="aa">click</a>
-		<a href="javascript:;" class="bb" onclick="alert('bbbb');">onclick</a>
+		<a href="javascript:;" class="bb" onclick="">onclick</a>
 		<a href="javascript:;" class="cc" >touch</a>
 	</div>
 	<script>
-		$('.aa').on('click', function(){alert('test');});
-		$('.cc').on('touchend', function(){alert('cccc');});
+		/*$('.aa').on('click', function(){alert('test');});
+		$('.cc').on('touchend', function(){alert('cccc');});*/
 	</script>
 <h2>11. H5上传图片</h2>
 	<input id="uploadfile" type="file" name="img" multiple="multiple" accept="image/*">
+	<div class="preview"></div>
 	<script>
 		$('#uploadfile').change(function(event) {
 			var file = event.target.files;
+			if(file.length>0){				
+				for (var i = 0; i < file.length; i++) {
+					var reader = new FileReader();
+					reader.readAsDataURL(file[i]);
+					$(reader).load(function(e) {
+						$('.preview').append('<img src="'+e.target.result+'" />');
+						$.ajax({
+							url: '../php/upload_img.php',
+							type: 'POST',
+							data: {data:e.target.result},
+							success: function(res){
+								var src = res;
+								$('.preview').append('<img src="'+src+'" />');
+								// $('.preview').append('<p>'+src+'</p>');
+							}
+						});
+						
+					});
+				};
+			}			
 		});
 	</script>
 </div>
