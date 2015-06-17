@@ -176,53 +176,75 @@ body {padding-bottom: 200px;}
 	<script>
 		$('#uploadfile').change(function(event) {
 			var file = event.target.files;
-			if(file.length>0){				
+			var $preview = $('.preview');
+			console.log(file);
+			/*$.ajax({
+				xhr: function(){
+					var xhr = new window.XMLHttpRequest();
+					xhr.upload.addEventListener('progress', function(evt){
+						console.log(evt.loaded);
+						if(evt.lengthComputable){
+							var percentComplete = Math.round(evt.loaded / evt.total)*100;
+							$('.progress').html('上传进度：'+percentComplete+'%');
+						}
+					}, false);
+					return xhr;
+				},
+				url: '../php/upload_img.php',
+				type: 'post',
+				data: {data:file[0]},
+				beforeSend: function(xhr){
+					xhr.setRequestHeader("X_FILENAME", file.name);
+				},
+				success: function(res){
+					var src = res;
+					$('.preview').append('<img src="'+src+'" />');
+				}
+			});*/
+			if(file.length>0){
 				for (var i = 0; i < file.length; i++) {
+					/* //base64
 					var reader = new FileReader();
 					reader.readAsDataURL(file[i]);
 					$(reader).load(function(e) {
 						var $preview = $('.preview');
 						// $preview.append('<img src="'+e.target.result+'" />');
-						$.ajax({
-							xhr: function(){
-								var xhr = new window.XMLHttpRequest();
-								xhr.upload.addEventListener('progress', function(evt){
-									console.log(evt.loaded);
-									if(evt.lengthComputable){
-										var percentComplete = Math.round(evt.loaded / evt.total)*100;
-										$('.progress').html('上传进度：'+percentComplete+'%');
-									}
-								}, false);
-								return xhr;
-							},							
+						$.ajax({							
 							url: '../php/upload_img.php',
 							type: 'POST',							
 							data: {data:e.target.result},
-							
 							success: function(res){
 								var src = res;
 								$preview.append('<img src="'+src+'" />');
 								// $preview.append('<p>'+src+'</p>');
 							}
 						});
-						/*var fd = new FormData(); 
-						fd.append('data', e.target.result);
-						var xhr = new XMLHttpRequest();
-						xhr.onreadystatechange = function(){
-							if(xhr.readyState==4 && xhr.status==200){  
-					            alert(xhr.responseText);  
-					        }
-						}
-						xhr.upload.onprogress = function(evt){
+					});*/
+					// file					
+					var xhr = new XMLHttpRequest();
+					if(xhr.upload){
+						xhr.upload.addEventListener('progress', function(evt){
 							console.log(evt.loaded);
 							if(evt.lengthComputable){
 								var percentComplete = Math.round(evt.loaded / evt.total)*100;
 								$('.progress').html('上传进度：'+percentComplete+'%');
 							}
+						}, false);
+
+						xhr.onreadystatechange = function(evt){
+							if(xhr.readyState == 4 && xhr.status == 200){
+								var res = xhr.responseText;
+								console.log(res);
+								$preview.append('<img src="'+res+'" />');
+							}
 						}
-						xhr.open('post', '../php/upload_img.php', true);
-						xhr.send(fd);*/
-					});
+						// 开始上传
+						var url = "../php/upload_img.php";
+						xhr.open("POST", url, true);
+						xhr.setRequestHeader("X_FILENAME", file[i].name);
+						xhr.send(file[i]);
+					}
+
 				};
 			}			
 		});
