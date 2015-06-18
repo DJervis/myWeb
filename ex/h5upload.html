@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scale=no, traget-densitydpi=high-dpi"/>
+    <title>HTML5 上传文件</title>
+
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+</head>
+<body>
+<style>
+	.progress {display: inline-block;width: 100px;height: 10px;border: 1px solid #aaa;}
+	.progress .innerbg {display: block;width: 0;height: 100%;background: #f00;}
+</style>
+<h2> H5 上传图片</h2>
+<input id="uploadfile" type="file" name="img" multiple="multiple" accept="image/*">
+上传进度：<span class="progress"><span class="innerbg"></span></span><span class="percent"></span>
+<div class="preview"></div>
+<script>
+	$('#uploadfile').change(function(event) {
+		var file = event.target.files;
+		var $preview = $('.preview');
+		console.log(file);
+		if(file.length>0){
+			for (var i = 0; i < file.length; i++) {
+				/* //base64
+				var reader = new FileReader();
+				reader.readAsDataURL(file[i]);
+				$(reader).load(function(e) {
+					var $preview = $('.preview');
+					// $preview.append('<img src="'+e.target.result+'" />');
+					$.ajax({							
+						url: '../php/upload_img.php',
+						type: 'POST',							
+						data: {data:e.target.result},
+						success: function(res){
+							var src = res;
+							$preview.append('<img src="'+src+'" />');
+							// $preview.append('<p>'+src+'</p>');
+						}
+					});
+				});*/
+				// file					
+				!function() {
+					var xhr = new XMLHttpRequest();
+					if(xhr.upload){
+						xhr.upload.addEventListener('progress', function(evt){
+							var percentComplete = (evt.loaded / evt.total)*100;
+							percentComplete = Math.round(percentComplete)+'%';
+							$('.innerbg').width(percentComplete);
+							$('.percent').html(percentComplete);
+						}, false);
+
+						xhr.onreadystatechange = function(evt){
+							if(xhr.readyState == 4){
+								if(xhr.status == 200){
+									var res = xhr.responseText;
+									console.log(res);
+									$preview.append('<img src="'+res+'" />');
+								}else{
+									alert(xhr.responseText);
+								}
+							}
+						}
+						// 开始上传
+						var url = "../php/upload_img.php";
+						xhr.open("POST", url, true);
+						xhr.setRequestHeader("X_FILENAME", file[i].name);
+						xhr.send(file[i]);
+					}
+				}();
+			};
+		}			
+	});
+</script>
+</body>
+</html>
