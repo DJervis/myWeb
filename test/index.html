@@ -169,6 +169,39 @@ body {padding-bottom: 200px;}
 		/*$('.aa').on('click', function(){alert('test');});
 		$('.cc').on('touchend', function(){alert('cccc');});*/
 	</script>
+<h2>11. 对象</h2>
+	<script type="text/javascript">
+	var Person = {
+		name: null,
+		age: null,
+		sayName: getthis
+	};
+	var one = {
+		name: "dj",
+		age: 3	
+	};
+	var extend = function(o,n,override){
+	    for(var p in n){
+			o[p] = n[p];
+			/*if(n.hasOwnProperty(p) && (!o.hasOwnProperty(p) || override)) {
+				o[p] = n[p];
+			}*/
+	    }
+	    return o;
+	};
+
+	/*function Person(){};
+	Person.prototype = {
+		name: "dj",
+		age: 3,
+		sayName: getthis
+	};	*/
+	function getthis(){
+		console.log(this);
+	}
+	var newPerson = extend(Person, one);
+	newPerson.sayName();
+	</script>
 </div>
 </body>
 </html>
