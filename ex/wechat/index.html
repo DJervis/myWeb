@@ -10,24 +10,232 @@
     <meta name="full-screen" content="yes">
     <meta name="format-detection" content="telephone=no">    
     <meta name="format-detection" content="address=no">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
     <link rel="icon" href="<?php echo zmf::config('topdomain'); ?>/favicon.ico" type="image/x-icon">    
 	<title>你是旅行控吗？</title>
 	<link rel="stylesheet" type="text/css" href="css/wechat.css">	
 </head>
 <body>
 	<div class="for-wechat"><img src=""></div>
-	<a href="javascript:;" class="button btn-next">下一题</a>
+	<a href="javascript:;" class="button btn-next disable" style="display: none;">下一题</a>
 	<div class="wrapper">
-		<div class="page active" id="page-1">page-1</div>
-		<div class="page" id="page-2">page-2</div>
-		<div class="page" id="page-3">page-3</div>
-		<div class="page" id="page-4">page-4</div>
-		<div class="page" id="page-5">page-5</div>
-		<div class="page" id="page-6">page-6</div>
-		<div class="page" id="page-7">page-7</div>
-		<div class="page" id="page-8">page-8</div>
-		<div class="page" id="page-9">page-9</div>
-		<div class="page" id="page-10">page-10</div>
+		<div class="page active" id="page-start">
+			<div class="main">
+				<div class="start-bg">
+					<figure><img src="images/start_bg.png"></figure>
+				</div>
+				<div class="start-btn">开始测试</div>
+			</div>
+		</div>
+		<div class="page type-text" id="page-1">
+			<div class="main">
+				<div class="question">
+					<h3>1、以下是哪个景点？</h3>
+					<ul>
+						<li><span>A</span>埃菲尔铁塔</li>
+						<li><span>B</span>东京塔</li>
+						<li><span>C</span>迪拜塔</li>
+						<li><span>D</span>华盛顿塔</li>
+					</ul>					
+				</div>
+				<figure>
+					<img src="images/Eiffel.png">
+				</figure>
+			</div>
+		</div>
+		<div class="page type-text" id="page-2">
+			<div class="main">
+				<div class="question">
+					<h3>2、自由女神像除了美国，下列哪个国家还有？</h3>
+					<ul>
+						<li><span>A</span>英国</li>
+						<li><span>B</span>日本</li>
+						<li><span>C</span>韩国</li>
+						<li><span>D</span>瑞士</li>
+					</ul>					
+				</div>
+				<figure>
+					<img src="images/theStatueofLiberty.png">
+				</figure>
+			</div>
+		</div>
+		<div class="page type-two-col" id="page-3">
+			<div class="main">
+				<div class="question">
+					<h3>3、下列哪道美食是泰国菜？</h3>
+					<ul class="clearfix">
+						<li>
+							<span>A</span>担仔面
+							<figure>
+								<img src="images/dzm.png">
+							</figure>
+						</li>
+						<li>
+							<span>B</span>天妇罗
+							<figure>
+								<img src="images/tfl.png">
+							</figure>
+						</li>
+						<li>
+							<span>C</span>泡菜石锅拌饭
+							<figure>
+								<img src="images/pcsgbf.png">
+							</figure>
+						</li>
+						<li>
+							<span>D</span>冬阴功汤
+							<figure>
+								<img src="images/dygt.png">
+							</figure>
+						</li>
+					</ul>					
+				</div>
+			</div>
+		</div>
+		<div class="page type-text" id="page-4">
+			<div class="main">
+				<div class="question">
+					<h3>4、俗称“西瓜卡”的交通卡是下列哪个国家？</h3>
+					<ul>
+						<li><span>A</span>日本</li>
+						<li><span>B</span>法国</li>
+						<li><span>C</span>香港</li>
+						<li><span>D</span>意大利</li>
+					</ul>					
+				</div>
+				<figure>
+					<img src="images/suica.png">
+				</figure>
+			</div>
+		</div>
+		<div class="page type-text" id="page-5">
+			<div class="main">
+				<div class="question">
+					<h3>5、GUCCI CAFE总店开设在下列哪个地方？</h3>
+					<ul>
+						<li><span>A</span>韩国首尔</li>
+						<li><span>B</span>英国伦敦</li>
+						<li><span>C</span>意大利米兰</li>
+						<li><span>D</span>日本东京</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="page type-two-col" id="page-6">
+			<div class="main">
+				<div class="question apps">
+					<h3>6、下列哪APP可以在旅行中定位晒美食美景？</h3>
+					<ul class="clearfix">
+						<li>
+							<div class="text"><span>A</span>十六番</div>
+							<figure>
+								<img src="images/16fan.png">
+							</figure>
+						</li>
+						<li>
+							<div class="text"><span>B</span>in</div>
+							<figure>
+								<img src="images/in.png">
+							</figure>
+						</li>
+						<li>
+							<div class="text"><span>C</span>堆糖</div>
+							<figure>
+								<img src="images/duitang.png">
+							</figure>
+						</li>
+						<li>
+							<div class="text"><span>D</span>nice</div>
+							<figure>
+								<img src="images/nice.png">
+							</figure>
+						</li>
+					</ul>					
+				</div>
+			</div>
+		</div>
+		<div class="page type-text" id="page-7">
+			<div class="main">
+				<div class="question">
+					<h3>7、土耳其的首都是下列哪个城市？</h3>
+					<ul>
+						<li><span>A</span>伊斯坦布尔</li>
+						<li><span>B</span>安卡拉</li>
+						<li><span>C</span>圣彼得堡</li>
+						<li><span>D</span>日内瓦</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="page type-text" id="page-8">
+			<div class="main">
+				<div class="question">
+					<h3>8、下列哪家书店获得过“全球20间最美丽的书店”称号？</h3>
+					<ul>
+						<li><span>A</span>新华书店</li>
+						<li><span>B</span>台湾好样本事</li>
+						<li><span>C</span>一本书店</li>
+						<li><span>D</span>席殊书屋</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="page type-text" id="page-9">
+			<div class="main">
+				<div class="question">
+					<h3>9、全球最小且已经开业的迪斯尼乐园在下列哪个地方？</h3>
+					<ul>
+						<li><span>A</span>莫斯科</li>
+						<li><span>B</span>东京塔</li>
+						<li><span>C</span>纽约</li>
+						<li><span>D</span>香港</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="page type-text" id="page-10">
+			<div class="main">
+				<div class="question">
+					<h3>10、下列哪个国家对中国公民个人游实行免签政策？</h3>
+					<ul>
+						<li><span>A</span>新加坡</li>
+						<li><span>B</span>泰国</li>
+						<li><span>C</span>毛里求斯</li>
+						<li><span>D</span>马来西亚</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="page" id="page-share">
+			<div class="main">
+				<div class="score">
+					<div class="score-text"><span id="score">30</span>分</div>
+					<div class="line line-up"></div>
+					<p>对于一个不爱好旅游的人来说，这已经实属不易，旅行前请一定做好旅行攻略</p>
+					<div class="line line-down"></div>
+				</div>
+				<div class="share">
+					<div class="share-title">分享到</div>
+					<div class="weixin clearfix">
+						<div class="wx-friend">
+							<span class="icon icon-weixin"></span>
+							微信
+						</div>
+						<div class="wx-timeline">
+							<span class="icon icon-timeline"></span>
+							朋友圈
+						</div>
+					</div>
+				</div>
+				<div class="appdown">
+					<p>想知道所有答案吗？请下载十六番手机APP</p>
+					<a class="button download" href="#">立即下载</a>
+				</div>
+			</div>
+		</div>
 	</div>
 
 <script type="text/javascript" src="jquery.min.js"></script>
