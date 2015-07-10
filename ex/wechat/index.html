@@ -19,7 +19,7 @@
 	<link rel="stylesheet" type="text/css" href="css/wechat.css">	
 </head>
 <body>
-	<div class="for-wechat"><img src=""></div>
+	<div class="for-wechat"><img src="images/16fan.png"></div>
 	<a href="javascript:;" class="button btn-next disable" style="display: none;">下一题</a>
 	<div class="wrapper">
 		<div class="page active" id="page-start">
@@ -28,6 +28,7 @@
 					<figure><img src="images/start_bg.png"></figure>
 				</div>
 				<div class="start-btn">开始测试</div>
+				<input type="button" id="reload" value="刷新">
 			</div>
 		</div>
 		<div class="page type-text" id="page-1">
@@ -212,27 +213,15 @@
 		<div class="page" id="page-share">
 			<div class="main">
 				<div class="score">
-					<div class="score-text"><span id="score">30</span>分</div>
+					<div class="score-text"><span id="score">0</span>分</div>
 					<div class="line line-up"></div>
-					<p>对于一个不爱好旅游的人来说，这已经实属不易，旅行前请一定做好旅行攻略</p>
+					<p class="description">对于一个不爱好旅游的人来说，这已经实属不易，旅行前请一定做好旅行攻略</p>
 					<div class="line line-down"></div>
 				</div>
-				<div class="share">
-					<div class="share-title">分享到</div>
-					<div class="weixin clearfix">
-						<div class="wx-friend">
-							<span class="icon icon-weixin"></span>
-							微信
-						</div>
-						<div class="wx-timeline">
-							<span class="icon icon-timeline"></span>
-							朋友圈
-						</div>
-					</div>
-				</div>
+				<div class="reload">重新答题</div>
 				<div class="appdown">
 					<p>想知道所有答案吗？请下载十六番手机APP</p>
-					<a class="button download" href="#">立即下载</a>
+					<a class="button download" onclick="javascript:_gaq.push(['_trackPageview','weixin-game']);" href="https://itunes.apple.com/us/app/shi-liu-fan-xiang-shi-jie/id855031900?ls=1&mt=8" target="_blank">立即下载</a>
 				</div>
 			</div>
 		</div>

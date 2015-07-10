@@ -9,7 +9,7 @@ html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquot
 }
 article, aside, figure, footer, header, nav, section, details, summary {display: block;}
 html {box-sizing: border-box; font-size: 62.5%;-webkit-tap-highlight-color: transparent; }
-body {font-size: 1.4rem;line-height:1.2;font-family: Arial,'Microsoft Yahei',STHeiti,sans-serif; color: #333;}
+body {font-size: 1.4rem;line-height:1.5;font-family: Arial,'Microsoft Yahei',STHeiti,sans-serif; color: #333;}
 *,
 *:before,
 *:after {
@@ -101,6 +101,7 @@ body>.btn-next {
 }
 .question h3 {
 	font-size: 1.7rem;
+	padding-right: 25px;
 }
 .question ul {margin-top: 15px;}
 .question li, #page-start .start-btn {cursor: pointer;}
@@ -182,6 +183,10 @@ body>.btn-next {
 	padding-top: 30px;
 }
 #page-start .start-btn {
+	position: absolute;
+	bottom: 80px;
+	left: 50%;
+	margin-left: -40px;
 	width: 80px;
 	height: 80px;
 	border-radius: 40px;
@@ -189,7 +194,6 @@ body>.btn-next {
 	color: #fff;
 	line-height: 80px;
 	text-align: center;
-	margin: 90px auto 0;
 	overflow: hidden;
 }
 /* page-share */
@@ -257,4 +261,20 @@ body>.btn-next {
 }
 .download {
 	margin: 8px auto 0;
+	max-width: 440px;
+}
+.download:visited {color: #fff;}
+.reload {
+	position: absolute;
+	left: 0;
+	right: 0;
+	max-width: 440px;
+	width: 62.5%;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	color: #fff;
+	border-bottom: 5px solid #f67f25;
+	background-color: #ff8a32;	
+	margin: 35px auto 0;
 }
