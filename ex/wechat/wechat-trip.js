@@ -13,10 +13,26 @@
 var score = 0;
 var rightAnswer = [0, 1, 3, 0, 2, 0, 1, 1, 3, 2];
 var descrip = {
-	"0-30" : "对于一个不爱好旅游的人来说，这已经实属不易，旅行前请一定做好旅行攻略",
-	"40-60" : "虽然分数不高，但你是一个值得信赖的旅行小伙伴，请再接再厉！",
-	"70-90" : "分数不错！一个人旅行也不用担心找不到好吃的好玩的。",
-	"100" : "你就是我们要找的旅行控！跟你一同出游，可以放心玩！"
+	"0-30" : ["对于一个不爱好旅游的人来说，这已经实属不易，旅行前请一定做好旅行攻略", "喜欢旅行却答不好这套题。你来试试？"],
+	"40-60" : ["虽然分数不高，但你是一个值得信赖的旅行小伙伴，请再接再厉！", "是一个值得信赖的旅行小伙伴！你来试试？"],
+	"70-90" : ["分数不错！一个人旅行也不用担心找不到好吃的好玩的。", "就算一个人旅行也不用担心。你来试试？"],
+	"100" : ["你就是我们要找的旅行控！跟你一同出游，可以放心玩！", "我就是传说中的旅行控。你来试试？"]
+};
+var shareData = {
+	title: '你是旅行控吗？',
+	desc: '',
+	link: function(){
+		return window.location.href;
+	},
+	imgUrl: function(){
+		return $('.for-wechat>img')[0].src;
+	},
+	success: function(){
+		alert('分享成功');
+	},
+	cancel: function(){
+		alert('取消了分享');
+	}
 };
 $(function() {
     FastClick.attach(document.body);
@@ -60,6 +76,7 @@ $(function() {
     			sharePage.addClass('active');
     			nextBtn.fadeOut('fast');
     			getScore();
+    			shareData.desc = getDesc();
     		}  		
     		if((n-1) >= 1){
     			prePage.css('display', 'none');
@@ -101,16 +118,16 @@ $(function() {
     			score += 10;
     		}
     	}
-    	console.log(selectArr);
+    	// console.log(selectArr);
     	$('#score').text(score);
     	if( score <= 30){
-    		description.text(descrip['0-30']);
+    		description.text(descrip['0-30'][0]);
     	}else if(score > 30 && score <= 60){
-    		description.text(descrip['40-60']);
+    		description.text(descrip['40-60'][0]);
     	}else if(score > 60 && score <= 90){
-    		description.text(descrip['70-90']);
+    		description.text(descrip['70-90'][0]);
     	}else if(score == 100){
-    		description.text(descrip['100']);
+    		description.text(descrip['100'][0]);
     	}
     }  
 
@@ -122,7 +139,9 @@ $(function() {
     	window.location.reload(true);
     });
 });
-!function(){
+
+//app download
+!function(){ 
 	var downBtn = $('.download');
 	var u=navigator.userAgent;
     var android = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
@@ -145,3 +164,42 @@ $(function() {
         });
     };
 }();
+
+//weixin share
+function getDesc(){
+	var text = '我得了'+score+'分';
+	if( score <= 30){
+		text += descrip['0-30'][1];
+	}else if(score > 30 && score <= 60){
+		text += descrip['40-60'][1];
+	}else if(score > 60 && score <= 90){
+		text += descrip['70-90'][1];
+	}else if(score == 100){
+		text += descrip['100'][1];
+	}
+	return text;
+}
+/*$.ajax({
+	type: 'GET',
+	url: 'getWxSignature.php',
+	success: function(msg){
+		console.log(msg);
+		wx.config({
+		    debug: true, // 开启调试模式
+		    appId: 'wxe0f620c346f87b3b', // 必填，公众号的唯一标识
+		    timestamp: msg[0], // 必填，生成签名的时间戳
+		    nonceStr: msg[1], // 必填，生成签名的随机串
+		    signature: msg[2],// 必填，签名，见附录1
+		    jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo'] // 必填，需要使用的JS接口列表
+		});
+	}
+});*/
+/*wx.ready(function(){		
+	wx.onMenuShareTimeline(shareData); //朋友圈
+	wx.onMenuShareAppMessage(shareData); //分享给朋友
+	wx.onMenuShareQQ(shareData); //分享到QQ
+	wx.onMenuShareWeibo(shareData); //分享到腾讯微博
+});
+wx.error(function(res){
+	alert('错误：'+res);
+});*/

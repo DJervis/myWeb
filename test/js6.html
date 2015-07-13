@@ -20,18 +20,9 @@
 <body>
 <div class="text" value="暮然回首">暮然回首</div>
 <script>
-	function Person(name, age, job){
-		this.name = name;
-		this.age = age;
-		this.job = job;
-		this.sayName = sayName;
-	}
-	function sayName(){
-		alert(this.name);
-	}
-	var o = new Object();
-	Person.call(o, 'Lucy', 22, 'Nurse');
-	o.sayName();
+	var i = 0; 
+setInterval( function(){ ++i }, 1 ); 
+setInterval( function(){ document.title = 'FPS:' + i; i = 0}, 1000 );
 </script>
 </div>
 </body>

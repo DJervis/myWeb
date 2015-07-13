@@ -1,3 +1,8 @@
+<?php
+	require_once "jssdk.php";
+	$jssdk = new JSSDK("wxe0f620c346f87b3b", "08b7ed2b5a2c6dea7198905695594e50");
+	$signPackage = $jssdk->GetSignPackage();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +19,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Expires" content="0" />
-    <link rel="icon" href="<?php echo zmf::config('topdomain'); ?>/favicon.ico" type="image/x-icon">    
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">    
 	<title>你是旅行控吗？</title>
 	<link rel="stylesheet" type="text/css" href="css/wechat.css">	
 </head>
@@ -227,8 +232,35 @@
 		</div>
 	</div>
 
-<script type="text/javascript" src="jquery.min.js"></script>
-<script type="text/javascript" src="fastclick.min.js"></script>
-<script type="text/javascript" src="wechat-trip.js"></script>	
+<script src="jquery.min.js"></script>
+<script src="fastclick.min.js"></script>
+<!-- <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> -->
+<script src="jweixin-1.0.0.js"></script>
+<script src="wechat-trip.js"></script>
+<script>
+wx.config({
+    debug: true,
+    appId: '<?php echo $signPackage["appId"];?>',
+    timestamp: '<?php echo $signPackage["timestamp"];?>',
+    nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+    signature: '<?php echo $signPackage["signature"];?>',
+    jsApiList: [
+    'onMenuShareTimeline', 
+    'onMenuShareAppMessage', 
+    'onMenuShareQQ', 
+    'onMenuShareWeibo'
+    ]
+});
+wx.ready(function(){
+	alert(shareData);
+	wx.onMenuShareTimeline(shareData); //朋友圈
+	wx.onMenuShareAppMessage(shareData); //分享给朋友
+	wx.onMenuShareQQ(shareData); //分享到QQ
+	wx.onMenuShareWeibo(shareData); //分享到腾讯微博
+});
+wx.error(function(res){
+	alert('错误：'+res);
+});
+</script>
 </body>
 </html>
