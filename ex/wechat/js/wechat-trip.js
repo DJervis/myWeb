@@ -26,14 +26,9 @@ var shareData = {
 	},
 	imgUrl: function(){
 		return $('.for-wechat>img')[0].src;
-	},
-	success: function(){
-		alert('分享成功');
-	},
-	cancel: function(){
-		alert('取消了分享');
 	}
 };
+var wxData = null;
 $(function() {
     FastClick.attach(document.body);
 
@@ -45,11 +40,11 @@ $(function() {
     // start page    
     startBtn.on('click', function() {
     	startPage.removeClass('active').addClass('animated');
-    	$(page[1]).addClass('active');
-    	nextBtn.fadeIn('400');
+    	$(page[1]).addClass('active');    	
     	$(page[2]).css('display', 'block');
     	select();
     	setTimeout(function(){
+            nextBtn.fadeIn('400');
     		startPage.css('display', 'none');
     	}, 500);
     });
@@ -77,6 +72,15 @@ $(function() {
     			nextBtn.fadeOut('fast');
     			getScore();
     			shareData.desc = getDesc();
+                wxData = {
+                    title: shareData.title,
+                    desc: shareData.desc,
+                    link: shareData.link(),
+                    imgUrl: shareData.imgUrl()
+                };
+                if(typeof wxShare === 'function'){
+                    wxShare();
+                }                
     		}  		
     		if((n-1) >= 1){
     			prePage.css('display', 'none');
@@ -167,7 +171,7 @@ $(function() {
 
 //weixin share
 function getDesc(){
-	var text = '我得了'+score+'分';
+	var text = '我得了'+score+'分，';
 	if( score <= 30){
 		text += descrip['0-30'][1];
 	}else if(score > 30 && score <= 60){

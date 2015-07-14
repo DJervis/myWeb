@@ -1,12 +1,22 @@
 <?php
 	require_once "jssdk.php";
-	$jssdk = new JSSDK("wxe0f620c346f87b3b", "08b7ed2b5a2c6dea7198905695594e50");
+	$jssdk = new JSSDK("wxa213be1d4f948fac", "f6a4cd37d078a49dc73c6cf1ceb41321");
 	$signPackage = $jssdk->GetSignPackage();
+
+	function is_weixin(){ 
+		if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
+				return true;
+		}	
+		return false;
+	}
+	$isWeixin = is_weixin();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="十六番，十六番旅行，十六番游记攻略、问答、约伴、直播" />
+	<meta name="description" content="十六番,这里有最新的自助游攻略游记,最佳自助游线路推荐,在线解答旅行交通、美食、住宿等问题,出境自助游有不清楚的地方就来十六番,手把手教你自由行。">
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1">
     <meta content="yes" name="apple-mobile-web-app-capable" />
@@ -232,14 +242,16 @@
 		</div>
 	</div>
 
-<script src="jquery.min.js"></script>
-<script src="fastclick.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/fastclick.min.js"></script>
+<script src="js/wechat-trip.js"></script>
+<?php if($isWeixin) { ?>
 <!-- <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> -->
-<script src="jweixin-1.0.0.js"></script>
-<script src="wechat-trip.js"></script>
+<script src="js/jweixin-1.0.0.js"></script>
 <script>
+function wxShare(){
 wx.config({
-    debug: true,
+    debug: false,
     appId: '<?php echo $signPackage["appId"];?>',
     timestamp: '<?php echo $signPackage["timestamp"];?>',
     nonceStr: '<?php echo $signPackage["nonceStr"];?>',
@@ -252,15 +264,17 @@ wx.config({
     ]
 });
 wx.ready(function(){
-	alert(shareData);
-	wx.onMenuShareTimeline(shareData); //朋友圈
-	wx.onMenuShareAppMessage(shareData); //分享给朋友
-	wx.onMenuShareQQ(shareData); //分享到QQ
-	wx.onMenuShareWeibo(shareData); //分享到腾讯微博
+	wx.onMenuShareTimeline(wxData); //朋友圈
+	wx.onMenuShareAppMessage(wxData); //分享给朋友
+	wx.onMenuShareQQ(wxData); //分享到QQ
+	wx.onMenuShareWeibo(wxData); //分享到腾讯微博
 });
 wx.error(function(res){
+	console.log(res);
 	alert('错误：'+res);
 });
+}
 </script>
+<?php } ?>
 </body>
 </html>
