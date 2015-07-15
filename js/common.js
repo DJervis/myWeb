@@ -376,3 +376,22 @@ function cmakeCode (turl) {
     });
     qrcode.makeCode(url);
 }
+
+function strToDate(str){ // yy-mm-dd hh:mm
+    var str = str;
+    var date = new Date();
+    var strArr = str.split(' ');
+    var arrY = strArr[0].split('-');
+    date.setFullYear(arrY[0]);
+    date.setMonth(arrY[1]-1);
+    date.setDate(arrY[2]);
+    if(strArr[1]){
+        var arrH = strArr[1].split(':');
+        date.setHours(arrH[0]);
+        date.setMinutes(arrH[1]);
+    }else{
+        date.setHours(0);
+        date.setMinutes(0);
+    }
+    return date;
+}

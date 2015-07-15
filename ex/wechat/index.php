@@ -1,15 +1,18 @@
 <?php
+function is_weixin(){ 
+	if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
+			return true;
+	}	
+	return false;
+}
+$isWeixin = is_weixin();
+if($isWeixin){
 	require_once "jssdk.php";
-	$jssdk = new JSSDK("wxa213be1d4f948fac", "f6a4cd37d078a49dc73c6cf1ceb41321");
+	$appId = "wxa213be1d4f948fac";
+	$appSecret = "f6a4cd37d078a49dc73c6cf1ceb41321";
+	$jssdk = new JSSDK($appId, $appSecret);
 	$signPackage = $jssdk->GetSignPackage();
-
-	function is_weixin(){ 
-		if ( strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger') !== false ) {
-				return true;
-		}	
-		return false;
-	}
-	$isWeixin = is_weixin();
+}	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -260,6 +263,7 @@ wx.config({
     'onMenuShareTimeline', 
     'onMenuShareAppMessage', 
     'onMenuShareQQ', 
+    'onMenuShareQZone',
     'onMenuShareWeibo'
     ]
 });
@@ -267,13 +271,22 @@ wx.ready(function(){
 	wx.onMenuShareTimeline(wxData); //朋友圈
 	wx.onMenuShareAppMessage(wxData); //分享给朋友
 	wx.onMenuShareQQ(wxData); //分享到QQ
+	wx.onMenuShareQZone(wxData); //分享到QQ空间
 	wx.onMenuShareWeibo(wxData); //分享到腾讯微博
 });
 wx.error(function(res){
-	console.log(res);
 	alert('错误：'+res);
 });
 }
+!function(){
+	wxData = {
+        title: shareData.title,
+        desc: shareData.link(),
+        link: shareData.link(),
+        imgUrl: shareData.imgUrl()
+    };
+    wxShare();
+}();
 </script>
 <?php } ?>
 </body>
