@@ -15,15 +15,47 @@
 		-webkit-writing-mode: vertical-lr;
 		border: 1px solid #999;
 	}
+	#drawing {display:block;border:1px solid #aaa;margin: 0 auto;}
 </style>
 </head>
 <body>
-<div class="text" value="暮然回首">暮然回首</div>
+<canvas id="drawing" width="500" height="300">canvas</canvas>
+<span id="span"></span>
+
 <script>
-	var i = 0; 
-setInterval( function(){ ++i }, 1 ); 
-setInterval( function(){ document.title = 'FPS:' + i; i = 0}, 1000 );
+function log(message){
+	var debug = document.getElementById('debugInfo');
+	if(debug == null){
+		debug = document.createElement('div');
+		debug.id = "debugInfo";
+		debug.style.cssText = "position:absolute;top:0;right:0;padding:5px;width:400px;min-height:50px;border:1px solid #f00;background:#fff;font-size:12px;";
+		document.body.appendChild(debug);
+	}
+	debug.innerHTML += "<p>"+message+"</p>";
+	console.log(message);
+}
+
+function Polygon(sides){
+	if(this instanceof Polygon){
+		this.sides = sides;
+		this.getArea = function(){
+			return 0;
+		};
+	}else{
+		return new Polygon(sides);
+	}
+}
+function Rectangle(width, height){
+	Polygon.call(this, 2);
+	this.width = width;
+	this.height = height;
+	this.getArea = function(){
+		return this.width * this.height;
+	};
+}
+Rectangle.prototype = new Polygon();
+var rect = new Rectangle(5, 10);
+alert(rect.sides);
 </script>
-</div>
 </body>
 </html>
