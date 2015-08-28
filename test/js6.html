@@ -16,12 +16,15 @@
 		border: 1px solid #999;
 	}
 	#drawing {display:block;border:1px solid #aaa;margin: 0 auto;}
+	input[type='radio'] {color: #f00;}
 </style>
 </head>
 <body>
 <canvas id="drawing" width="500" height="300">canvas</canvas>
+<input type="radio" id="radio" ><label for="radio">radio</label>
 <span id="span"></span>
-
+<div id="qrcode"></div>
+<script type="text/javascript" src="../js/qrcode.min.js"></script>
 <script>
 function log(message){
 	var debug = document.getElementById('debugInfo');
@@ -55,7 +58,29 @@ function Rectangle(width, height){
 }
 Rectangle.prototype = new Polygon();
 var rect = new Rectangle(5, 10);
-alert(rect.sides);
+// alert(rect.sides);
+
+!function(){
+	var url = window.location.href;
+	var qrcode = new QRCode("qrcode", {
+	    text: url,
+	    width: 144,
+	    height: 144,
+	    colorDark : "#000",
+	    colorLight : "#fff",
+	    correctLevel : QRCode.CorrectLevel.L
+	});
+}();
+function testA(str, callback){
+	var a = str;
+	var b = callback();
+	return a+b;
+}
+function testB(){
+	return "b";
+}
+var str = testA("aa", testB);
+alert(str);
 </script>
 </body>
 </html>
