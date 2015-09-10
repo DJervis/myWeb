@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<meta content="fullscreen=yes,preventMove=no" name="ML-Config">
+	<title>sea.js test</title>
+</head>
+<body>
+<div class="seajs">
+	<h3>sea.js test</h3>
+	<button type="button" class="btn">click</button>
+	<button type="button" class="btn">click</button>
+	<button type="button" class="btn">click</button>
+	<button type="button" class="btn">click</button>
+	<button type="button" class="btn">click</button>
+</div>
+
+
+<script type="text/javascript" src="../js/seajs/2.2.0/sea.js"></script>
+<script>
+seajs.config({
+	base: "../js/",
+	alias: {
+		"jquery": "jquery/1.11.1/jquery.min.js"
+	}
+});
+
+seajs.use(["jquery", "../js/seajs_test"], function(jquery, test){
+	// test.say();
+	var btn = $('.btn');
+	for(var i=0; i<btn.length; i++){
+	    btn[i].onmouseover = function(num){
+	        return function(){
+	            test.say('mousevoer '+num);
+	        };
+	    }(i);
+	    btn[i].onclick = function(num){
+	        return function(){
+	            test.say('click '+num);
+	        };
+	    }(i);
+	}
+});
+</script>
+</body>
+</html>
