@@ -25,8 +25,8 @@ seajs.config({
 		"jquery": "jquery/1.11.1/jquery.min.js"
 	}
 });
-
-seajs.use(["jquery", "../js/seajs_test"], function(jquery, test){
+seajs.use("../js/seajs_test");
+/*seajs.use(["jquery", "../js/seajs_test"], function(jquery, test){
 	// test.say();
 	var btn = $('.btn');
 	for(var i=0; i<btn.length; i++){
@@ -41,7 +41,7 @@ seajs.use(["jquery", "../js/seajs_test"], function(jquery, test){
 	        };
 	    }(i);
 	}
-});
+});*/
 </script>
 </body>
 </html>

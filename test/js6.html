@@ -17,13 +17,46 @@
 	}
 	#drawing {display:block;border:1px solid #aaa;margin: 0 auto;}
 	input[type='radio'] {color: #f00;}
+
+	ul, li {list-style: none;}
+	.box-flex { 
+		display:-webkit-box;
+		display:-moz-box;
+		display:-ms-box; 
+		display:box;
+		width: 500px;
+	}
+	.box-flex .li-flex {
+		-webkit-box-flex: 1;
+		-moz-box-flex: 1;
+		box-flex: 1;
+	}
+	.box-flex li {
+		height: 50px;
+		border: 1px solid #fff;
+		background: #ddd;
+	}
 </style>
 </head>
 <body>
+<img src="http://guide.16fan.com/attachments/restaurant/170/100009/52aea4804dc6b.jpg">
 <canvas id="drawing" width="500" height="300">canvas</canvas>
 <input type="radio" id="radio" ><label for="radio">radio</label>
 <span id="span"></span>
 <div id="qrcode"></div>
+
+
+
+<div >
+	<ul class="box-flex">
+		<li class="li-flex">00</li>
+		<li class="li-flex">00</li>
+		<li class="li-flex">00</li>
+		<li class="li-flex">00</li>
+		<li class="li-flex">00</li>
+		<li class="li-flex">00</li>
+	</ul>
+</div>
 <script type="text/javascript" src="../js/qrcode.min.js"></script>
 <script>
 function log(message){
@@ -71,15 +104,6 @@ var rect = new Rectangle(5, 10);
 	    correctLevel : QRCode.CorrectLevel.L
 	});
 }();
-function testA(str, callback){
-	var a = str;
-	var b = callback();
-	return a+b;
-}
-function testB(){
-	return "b";
-}
-var str = testA("aa", testB);
 </script>
 </body>
 </html>
