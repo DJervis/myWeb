@@ -84,14 +84,15 @@ body {padding-bottom: 200px;}
 			JTC.setday();
 		}
 		checkin.onfocus = function(){
-			JTC.setday();
+			JTC.setday({minDate: '2015-11-9'});
+			JTC.setStartDay();
 		}
 		checkout.onfocus = function(){
 			JTC.setday();
 		}
 	</script>
 	<!-- myCalendar	 calendar  calendar_time -->
-	<script type="text/javascript" src="../js/calendar_time.js"></script>
+	<script type="text/javascript" src="../js/calendar.js"></script>
 	<script type="text/javascript" src="../js/date.js"></script>
 <h2>4. png 半透明</h2>
 	<div class="icons">png8<a href="#" class="icon png8"></a></div>

@@ -5,84 +5,32 @@
 	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 	<meta content="fullscreen=yes,preventMove=no" name="ML-Config">
 	<title>test</title>
-<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/jquery/1.11.1/jquery.min.js"></script>
 <!--	<script type="text/javascript" src="../js/qmik.min.js"></script>-->
-
-<style type="text/css">
-.calendar-wrap {width:350px;height: auto; margin: 0 auto;border:1px solid #ddd;}
-.calendar-wrap ul {overflow: hidden;padding: 0;margin: 0;}
-.calendar-wrap ul li {list-style: none; display: inline-block;float:left; width: 50px; height:50px;border: 1px solid #ddd;box-sizing: border-box;}
-.calen-head, .calen-week {border-bottom: 1px solid #ddd;}
-.calen-days .outday {color: #999;}
-.calen-head {width: 100%;height:40px; line-height:40px;overflow: hidden;}
-.calen-head span {display: inline-block;float: left; text-align: center;}
-.month-up, .month-down {width: 20%; cursor: pointer;}
-.month-up:hover, .month-down:hover {background: #eee;}
-.month-year {width: 60%;}
-</style>
 </head>
 <body>
-<div class="calendar-wrap">
-	<div class="calen-head">
-		<span class="month-up"> < </span>
-		<span class="month-year"></span>
-		<span class="month-down"> > </span>
-	</div>
-	<div class="calen-body">
-		<ul class="calen-week">
-			<li>日</li><li>一</li><li>二</li><li>三</li><li>四</li><li>五</li><li>六</li>
-		</ul>
-		<ul class="calen-days">
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-		</ul>
-	</div>
-</div>
 
 <script>
 var calendar = (function(){
 	var calen = function(){},
 	config = {
+		style: '.calendar-wrap {width:350px;height: auto; margin: 0 auto;border:1px solid #ddd;}'
+             + '.calendar-wrap ul {overflow: hidden;padding: 0;margin: 0;}'
+             + '.calendar-wrap ul li {list-style: none; display: inline-block;float:left; width: 50px; height:50px;line-height:50px;text-align:center;border: 1px solid #ddd;box-sizing: border-box; cursor:pointer;}'
+             + '.calen-head, .calen-week {border-bottom: 1px solid #ddd;}'
+             + '.calen-days li:hover {background-color:#eee;}'
+             + '.calen-days .outday {color: #999;}'
+             + '.calen-head {width: 100%;height:40px; line-height:40px;overflow: hidden;}'
+             + '.calen-head span {display: inline-block;float: left; text-align: center;}'
+             + '.month-up, .month-down {width: 20%; cursor: pointer;}'
+             + '.month-up:hover, .month-down:hover {background: #eee;}'
+             + '.month-year {width: 60%;}'
+	},
+	lang = {
+		weekDay: {
+			zh: ['日', '一', '二', '三', '四', '五', '六'],
+			en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+		}
 	},
 	util = {
 		today: function(){
@@ -174,25 +122,70 @@ var calendar = (function(){
 		}
 	},
 	dialog = function(){
-		$('.month-up').on('click', function(){
-			events.turnMonth(-1);
-		});
-		$('.month-down').on('click', function(){
-			events.turnMonth(1);
-		});
-		$('.calen-days li').on('click', function(){
-			events.dayOnclick(this);
-		});
+		$('<style>').html(config.style).appendTo('head');
+
+		this.getHeaderPanel = function() {
+			var header = $('<div>', {'class': 'calen-head'});
+			$('<span>', {
+				'class': 'month-up',
+				text: ' < ',
+				click: function() {
+					events.turnMonth(-1);
+				}
+			}).appendTo(header);
+			$('<span>', {
+				'class': 'month-year',
+				text: ''
+			}).appendTo(header);
+			$('<span>', {
+				'class': 'month-down',
+				text: ' > ',
+				click: function() {
+					events.turnMonth(1);
+				}
+			}).appendTo(header);
+			return header;
+		};
+		this.getWeekDayPanel = function() {
+			var week = $('<ul>', {'class': 'calen-week'});
+			for(var i=0; i<7; i++) {
+				$('<li>', {text: lang.weekDay.zh[i]}).appendTo(week);
+			}
+			return week;
+		};
+		this.getDaysPanel = function() {
+			var days = $('<ul>', {'class': 'calen-days'});
+			for(var i=0; i<42; i++) {
+				$('<li>', {
+					text: '',
+					click: function(){
+						events.dayOnclick(this);
+					}
+				}).appendTo(days);
+			}
+			return days;			
+		};
+		var wrap = $('<div>', {'class': 'calendar-wrap'});
+		var _body = $('<div>', {'class': 'calendar-body'});
+		_body.append(this.getWeekDayPanel());
+		_body.append(this.getDaysPanel());
+		wrap.append(this.getHeaderPanel());
+		wrap.append(_body);
+		$('body').append(wrap);
 	};
 	calen.setDay = function(){
 		var now = new Date();
 		var yy = now.getFullYear(), mm = now.getMonth();
-		events.createDay(yy, mm+1);
 		dialog();
+		events.createDay(yy, mm+1);
+	};
+	calen.setStyle = function(str){
+		config.style = str;
 	};
 	return calen;
 })();
 calendar.setDay();
+
 </script>
 </body>
 </html>
