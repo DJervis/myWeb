@@ -5,26 +5,31 @@
 	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 	<meta content="fullscreen=yes,preventMove=no" name="ML-Config">
 	<title>test</title>
-<script type="text/javascript" src="../js/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="../js/jquery/1.11.1/jquery.js"></script>
 <!--	<script type="text/javascript" src="../js/qmik.min.js"></script>-->
 </head>
 <body>
-
+<div class="emoji">&#x1f618; &#128536;</div>
 <script>
 var calendar = (function(){
 	var calen = function(){},
 	config = {
-		style: '.calendar-wrap {width:350px;height: auto; margin: 0 auto;border:1px solid #ddd;}'
+		style: '.calendar-wrap {width:350px;height: auto; margin: 0 auto;border:1px solid #ddd;box-shadow:5px 5px 5px #999;}'
              + '.calendar-wrap ul {overflow: hidden;padding: 0;margin: 0;}'
-             + '.calendar-wrap ul li {list-style: none; display: inline-block;float:left; width: 50px; height:50px;line-height:50px;text-align:center;border: 1px solid #ddd;box-sizing: border-box; cursor:pointer;}'
-             + '.calen-head, .calen-week {border-bottom: 1px solid #ddd;}'
-             + '.calen-days li:hover {background-color:#eee;}'
-             + '.calen-days .outday {color: #999;}'
-             + '.calen-head {width: 100%;height:40px; line-height:40px;overflow: hidden;}'
-             + '.calen-head span {display: inline-block;float: left; text-align: center;}'
-             + '.month-up, .month-down {width: 20%; cursor: pointer;}'
-             + '.month-up:hover, .month-down:hover {background: #eee;}'
-             + '.month-year {width: 60%;}'
+             + '.calendar-wrap ul li {list-style: none; display: inline-block;float:left; width: 50px; height:50px;line-height:50px;text-align:center;box-sizing: border-box; cursor:pointer; border-radius:25px;}'
+             + '.calendar-wrap .calen-head, .calen-week {border-bottom: 1px solid #ddd;}'
+             + '.calendar-wrap .calen-week li {border:none;cursor:default;}'
+             + '.calendar-wrap .calen-days li:hover {color:#555;background-color:#eee;}'
+             + '.calendar-wrap .calen-days .today {color:#fff;background-color:#34a3ec;}'
+             + '.calendar-wrap .calen-days .outday {color: #999;}'
+             + '.calendar-wrap .calen-head {width: 100%;height:40px; line-height:40px;overflow: hidden;}'
+             + '.calendar-wrap .calen-head span {display: inline-block;float: left; text-align: center;}'
+             + '.calendar-wrap .month-up, .month-down {width: 20%; cursor: pointer;}'
+             + '.calendar-wrap .month-up:hover, .month-down:hover {background: #eee;}'
+             + '.calendar-wrap .month-year {width: 60%;}',
+        minDate: 0, //日期范围最小值(yyyyMMdd) 0. 表示不设定
+        maxDate: 0, //日期范围最大值(yyyyMMdd) 0. 表示不设定
+        ranged: 1 //是否包含日期边界值: 0. 不包含; 1. 包含
 	},
 	lang = {
 		weekDay: {
@@ -76,7 +81,9 @@ var calendar = (function(){
 	},
 	events = {
 		setHeaderYM: function(yy, mm){
-			$('.month-year').text(yy + "-" + mm);
+			var monthYear = $('.month-year');
+			monthYear.attr('data-date', yy+'-'+mm);
+			monthYear.text(yy + "年 " + mm + '月');
 		},
 		createDay: function(yy, mm){
 			events.setHeaderYM(yy, mm);
@@ -84,28 +91,45 @@ var calendar = (function(){
 			var days = util.getMonthDays(yy, mm);
 			var alldays = $('.calen-days li');
 			//上月
-			var pre = util.getNYearMonth(yy, mm, -1);			
+			var pre = util.getNYearMonth(yy, mm, -1);
 			var preMonthDays = util.getMonthDays(pre.YY, pre.MM);
 			for(var i=0; i <= firstday; i++){
-				$(alldays[firstday-i-1]).text(preMonthDays-i).addClass('outday');
+				var theDay = $(alldays[firstday-i-1]);
+				theDay.attr('data-date', yy+'-'+(mm-1)+'-'+(preMonthDays-i));
+				theDay.text(preMonthDays-i).addClass('outday');
+				theDay.removeClass('today');
 			}
 			//本月
+			var today = util.today(),
+				tdY = today.getFullYear(),
+				tdM = today.getMonth()+1,
+				tdD = today.getDate(),
+				tdStr = tdY+'-'+tdM+'-'+tdD;
 			for(var i=0; i < days; i++){
-				var theDay = $(alldays[firstday+i]);
+				var theDay = $(alldays[firstday+i]),
+					theDayStr = yy+'-'+mm+'-'+(i+1);
+				theDay.attr('data-date', theDayStr);
 				theDay.text(i+1);
+				theDay.removeClass('today');
 				if(theDay.hasClass('outday')){
 					theDay.removeClass('outday');
+				}
+				if(tdStr == theDayStr) {
+					theDay.addClass('today');
 				}
 			}
 			//下月
 			var xx = parseInt(firstday+days);
 			var next = util.getNYearMonth(yy, mm, 1);
 			for(var i=0; i <= 42-firstday-days; i++){
-				$(alldays[xx+i]).text(i+1).addClass('outday');
+				var theDay = $(alldays[xx+i]);
+				theDay.attr('data-date', yy+'-'+(mm+1)+'-'+(i+1));
+				theDay.text(i+1).addClass('outday');
+				theDay.removeClass('today');
 			}			
 		},
 		turnMonth: function(n){
-			var ymArr = $('.month-year').text().split('-'),
+			var ymArr = $('.month-year').attr('data-date').split('-'),
 				year = parseInt(ymArr[0]),
 				month = parseInt(ymArr[1]);
 			if(n != 0){
@@ -116,14 +140,12 @@ var calendar = (function(){
 			events.createDay(year, month);
 		},
 		dayOnclick: function(dom){
-			var yearMonth = $('.month-year').text();
-			var day = $(dom).text();
-			alert(yearMonth + "-" + day);
+			var date = $(dom).attr('data-date');
+			alert(date);
 		}
 	},
 	dialog = function(){
 		$('<style>').html(config.style).appendTo('head');
-
 		this.getHeaderPanel = function() {
 			var header = $('<div>', {'class': 'calen-head'});
 			$('<span>', {
@@ -158,12 +180,13 @@ var calendar = (function(){
 			for(var i=0; i<42; i++) {
 				$('<li>', {
 					text: '',
+					'data-date': '',
 					click: function(){
 						events.dayOnclick(this);
 					}
 				}).appendTo(days);
 			}
-			return days;			
+			return days;
 		};
 		var wrap = $('<div>', {'class': 'calendar-wrap'});
 		var _body = $('<div>', {'class': 'calendar-body'});
@@ -180,11 +203,16 @@ var calendar = (function(){
 		events.createDay(yy, mm+1);
 	};
 	calen.setStyle = function(str){
-		config.style = str;
+		config.style += str;
 	};
 	return calen;
 })();
+// calendar.setStyle("");
 calendar.setDay();
+
+/*var style = document.createElement('style');
+style.innerText = 'sssss';
+$('head').append(style);*/
 
 </script>
 </body>
