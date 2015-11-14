@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 	<meta content="fullscreen=yes,preventMove=no" name="ML-Config">
 	<title>test</title>
@@ -9,24 +9,13 @@
 <!--	<script type="text/javascript" src="../js/qmik.min.js"></script>-->
 </head>
 <body>
-<div class="emoji">&#x1f618; &#128536;</div>
 <script>
 var calendar = (function(){
 	var calen = function(){},
 	config = {
-		style: '.calendar-wrap {width:350px;height: auto; margin: 0 auto;border:1px solid #ddd;box-shadow:5px 5px 5px #999;}'
-             + '.calendar-wrap ul {overflow: hidden;padding: 0;margin: 0;}'
-             + '.calendar-wrap ul li {list-style: none; display: inline-block;float:left; width: 50px; height:50px;line-height:50px;text-align:center;box-sizing: border-box; cursor:pointer; border-radius:25px;}'
-             + '.calendar-wrap .calen-head, .calen-week {border-bottom: 1px solid #ddd;}'
-             + '.calendar-wrap .calen-week li {border:none;cursor:default;}'
-             + '.calendar-wrap .calen-days li:hover {color:#555;background-color:#eee;}'
-             + '.calendar-wrap .calen-days .today {color:#fff;background-color:#34a3ec;}'
-             + '.calendar-wrap .calen-days .outday {color: #999;}'
-             + '.calendar-wrap .calen-head {width: 100%;height:40px; line-height:40px;overflow: hidden;}'
-             + '.calendar-wrap .calen-head span {display: inline-block;float: left; text-align: center;}'
-             + '.calendar-wrap .month-up, .month-down {width: 20%; cursor: pointer;}'
-             + '.calendar-wrap .month-up:hover, .month-down:hover {background: #eee;}'
-             + '.calendar-wrap .month-year {width: 60%;}',
+		width: 350,
+		style: '',
+		styleEle: null,
         minDate: 0, //日期范围最小值(yyyyMMdd) 0. 表示不设定
         maxDate: 0, //日期范围最大值(yyyyMMdd) 0. 表示不设定
         ranged: 1 //是否包含日期边界值: 0. 不包含; 1. 包含
@@ -77,6 +66,80 @@ var calendar = (function(){
 				YY: yy,
 				MM: mm
 			};
+		},
+		setDate: function(dateObj) {
+			if (dateObj == null || dateObj == undefined) {
+				return null;
+			}
+			var ret = null;
+			var x = typeof(dateObj);
+			try {
+				if (x == 'string') {
+					ret = new Date(trim(dateObj).replace(/[^0-9: ]+/g, '/'));
+				} else if (x == 'object') {
+					if (dateObj.getTime()) {
+						ret = new Date(dateObj.getTime());
+					}
+				}
+			} catch (e) {
+				ret = null;
+			}
+			return ret;
+		},
+		setStyle: function() {
+			var _width = config.width;
+			config.style = '.calendar-wrap {width:'+_width+'px;height: auto; margin: 0 auto;border:1px solid #ddd;box-shadow:5px 5px 5px #999;}'
+			             + '.calendar-wrap ul {overflow: hidden;padding: 0;margin: 0;}'
+			             + '.calendar-wrap ul li {list-style: none; display: inline-block;float:left; width:'+_width/7+'px; height:'+_width/7+'px;line-height:'+_width/7+'px;text-align:center;box-sizing: border-box; cursor:pointer; border-radius:'+_width/14+'px;}'
+			             + '.calendar-wrap .calen-head, .calen-week {border-bottom: 1px solid #ddd;}'
+			             + '.calendar-wrap .calen-week li {border:none;cursor:default;}'
+			             + '.calendar-wrap .calen-days li:hover {color:#555;background-color:#eee;}'
+			             + '.calendar-wrap .calen-days .today {color:#fff;background-color:#34a3ec;}'
+			             + '.calendar-wrap .calen-days .outday {color: #999;}'
+			             + '.calendar-wrap .calen-days .disabled {color: #999;}'
+			             + '.calendar-wrap .calen-days .disabled:hover {color: #ddd;background-color:#fff;}'
+			             + '.calendar-wrap .calen-head {width: 100%;height:40px; line-height:40px;overflow: hidden;}'
+			             + '.calendar-wrap .calen-head span {display: inline-block;float: left; text-align: center;}'
+			             + '.calendar-wrap .month-up, .month-down {width: 20%; cursor: pointer;}'
+			             + '.calendar-wrap .month-up:hover, .month-down:hover {background: #eee;}'
+			             + '.calendar-wrap .month-year {width: 60%;}';
+		    config.styleEle = $('<style>');
+		    config.styleEle.html(config.style).appendTo('head');
+		},
+		getDateNumbers: function(date) {
+			return {
+				year: date.getFullYear(),
+				month: date.getMonth() + 1,
+				day: date.getDate()
+			};
+		},
+		getIntegerOfDay: function(yy, mm, dd) {
+			if (yy == null) {
+				return 0;
+			}
+			if (arguments.length == 1) {
+				var x = util.getDateNumbers(yy);
+				return x.year * 10000 + x.month * 100 + x.day;
+			} else {
+				return yy * 10000 + mm * 100 + dd;
+			}
+		},
+		checkDateRange: function(yyMMdd) {
+			var set = config;
+			console.log(config);
+			if(set.minDate == 0 && set.maxDate == 0) {
+				return true;
+			}
+			if(set.minDate == 0) {
+				return set.ranged == 1 ? (yyMMdd <= set.maxDate) : (yyMMdd < set.maxDate);
+			} else if(set.maxDate == 0) {
+				return set.ranged == 1 ? (yyMMdd >= set.minDate) : (yyMMdd > set.minDate);
+			}
+			if (set.ranged == 1) {
+				return yyMMdd >= set.minDate && yyMMdd <= set.maxDate;
+			} else {
+				return yyMMdd > set.minDate && yyMMdd < set.maxDate;
+			}
 		}
 	},
 	events = {
@@ -86,6 +149,30 @@ var calendar = (function(){
 			monthYear.text(yy + "年 " + mm + '月');
 		},
 		createDay: function(yy, mm){
+			this.dayRange = function(obj, nday){				
+				var isRange = util.checkDateRange(nday);
+				console.log(isRange);
+				if(isRange) {
+					obj.removeClass('disabled');
+					obj.css('cursor', 'pointer');
+					obj.on('click', function(){
+						events.dayOnclick($(this));
+					});
+				}else{
+					obj.attr('class', 'disabled');
+					obj.css('cursor', 'default');
+					obj.off('click');
+				}
+				/*obj.axis = x;
+				obj.className = '';
+				obj.style.backgroundColor = config.dayBgColor[1];
+				obj.style.color = isRange === true ? config.dayColor[x === 0 ? 1 : 0] :
+					config.dayColor[2];
+				obj.style.cursor = isRange === true ? 'pointer' : 'default';
+				obj.onmousemove = isRange === true ? events.dayOnMouseMove : events.emptyFunc;
+				obj.onmouseout = isRange === true ? events.dayOnMouseOut : events.emptyFunc;
+				obj.onclick = isRange === true ? events.dayOnClick : events.emptyFunc;*/
+			};
 			events.setHeaderYM(yy, mm);
 			var firstday = util.getMonthOne(yy, mm);
 			var days = util.getMonthDays(yy, mm);
@@ -98,6 +185,7 @@ var calendar = (function(){
 				theDay.attr('data-date', yy+'-'+(mm-1)+'-'+(preMonthDays-i));
 				theDay.text(preMonthDays-i).addClass('outday');
 				theDay.removeClass('today');
+				this.dayRange(theDay, util.getIntegerOfDay(yy, mm-1, preMonthDays-i));
 			}
 			//本月
 			var today = util.today(),
@@ -117,6 +205,7 @@ var calendar = (function(){
 				if(tdStr == theDayStr) {
 					theDay.addClass('today');
 				}
+				this.dayRange(theDay, util.getIntegerOfDay(yy, mm, i+1));
 			}
 			//下月
 			var xx = parseInt(firstday+days);
@@ -126,6 +215,7 @@ var calendar = (function(){
 				theDay.attr('data-date', yy+'-'+(mm+1)+'-'+(i+1));
 				theDay.text(i+1).addClass('outday');
 				theDay.removeClass('today');
+				this.dayRange(theDay, util.getIntegerOfDay(yy, mm+1, i+1));
 			}			
 		},
 		turnMonth: function(n){
@@ -145,7 +235,7 @@ var calendar = (function(){
 		}
 	},
 	dialog = function(){
-		$('<style>').html(config.style).appendTo('head');
+		util.setStyle();
 		this.getHeaderPanel = function() {
 			var header = $('<div>', {'class': 'calen-head'});
 			$('<span>', {
@@ -196,23 +286,37 @@ var calendar = (function(){
 		wrap.append(_body);
 		$('body').append(wrap);
 	};
-	calen.setDay = function(){
+	calen.setDay = function(obj){
 		var now = new Date();
 		var yy = now.getFullYear(), mm = now.getMonth();
+		if(obj) {
+			try {
+				config.width = obj.width;
+				// config.minDate = obj.minDate;
+				// config.maxDate = obj.maxDate;
+			} catch (e) {
+				console.log(e);
+			}
+		}
 		dialog();
 		events.createDay(yy, mm+1);
 	};
 	calen.setStyle = function(str){
-		config.style += str;
+		if(str) {
+			var old = config.styleEle.html();
+			config.styleEle.html(old + str);
+		}
+	};
+	calen.setDateRange = function(minDate, maxDate, ranged) {
+		config.minDate = util.getIntegerOfDay(util.setDate(minDate));
+		config.maxDate = util.getIntegerOfDay(util.setDate(maxDate));
+		config.ranged = ranged === false ? 0 : 1;
 	};
 	return calen;
 })();
-// calendar.setStyle("");
-calendar.setDay();
-
-/*var style = document.createElement('style');
-style.innerText = 'sssss';
-$('head').append(style);*/
+calendar.setDateRange('2015-11-14','', 1);
+calendar.setDay({width: 300});
+calendar.setStyle('');
 
 </script>
 </body>

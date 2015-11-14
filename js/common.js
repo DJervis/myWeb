@@ -395,3 +395,26 @@ function strToDate(str){ // yy-mm-dd hh:mm
     }
     return date;
 }
+/**
+ * 用于把用utf16编码的字符(emoji)转换成实体字符，以供后台存储
+ * @param  {string} str 将要转换的字符串，其中含有utf16字符将被自动检出
+ * @return {string}     转换后的字符串，utf16字符将被转换成&#xxxx;形式的实体字符
+ */
+function utf16toEntities(str) {
+    var patt=/[\u2600-\u27bf]|[\ud800-\udbff][\udc00-\udfff]/g; // 检测utf16字符正则
+    str = str.replace(patt, function(char){
+            var H, L, code;
+            if (char.length===2) {
+                H = char.charCodeAt(0); // 取出高位
+                L = char.charCodeAt(1); // 取出低位
+                code = (H - 0xD800) * 0x400 + 0x10000 + L - 0xDC00; // 转换算法
+                code = code.toString(16); //16进制显示
+                return "&#" + code + ";";
+            } else {
+                code = char.charCodeAt();
+                code = code.toString(16); //16进制显示
+                return "&#" + code + ";";
+            }
+        });
+    return str;
+}
