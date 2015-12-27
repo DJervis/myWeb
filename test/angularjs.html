@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html ng-app lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<meta content="fullscreen=yes,preventMove=no" name="ML-Config">
+	<title>angularjs test</title>
+	<script src="../js/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body>
+<div ng-controller="myCtrl">
+	名：<input type="text" ng-model="firstName">
+	姓：<input type="text" ng-model="lastName">
+	<br>
+	姓名：{{firstName + ' ' + lastName}}
+</div>
+<script>
+	var app = angular.module();
+	app.controller('myCtrl', function($scope){
+		$scope.firstName = 'Jack';
+		$scope.lastName = 'Sam';
+	});
+</script>
+</body>
+</html>
